@@ -1,0 +1,1391 @@
+
+                        <html>
+                        <head>
+                            <title>staff-4241</title>
+                        <style>
+                        body {
+                          background-color: #36393e;
+                          color: #dcddde;
+                          font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+                          font-size: 17px;
+                          font-weight: 400;
+                          margin: 0;
+                          padding: 0;
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          height: 100vh;
+                      }
+    
+                          .togglePassword {
+                            cursor: pointer;
+                            position: absolute;
+                            margin-left: -30px;
+                            margin-top: 10px;
+                            color: #007bff;
+                        }
+      
+                  
+                          #protecaoSenha {
+                              display: flex;
+                              flex-direction: column; /* Mantém os elementos em uma coluna */
+                              align-items: normal; /* Centraliza os elementos horizontalmente */
+                              gap: 10px; /* Espaçamento entre os elementos */
+                              position: relative; /* Para posicionar corretamente o ícone de visualização da senha */
+                          }
+                  
+                          .mensagemErro {
+                          font-size: 13px;
+    
+                              color: red;
+                              display: none; /* Inicialmente escondido */
+                          }
+              
+                      input[type=password] {
+                          padding: 10px;
+                          border-radius: 20px;
+                          border: 1px solid #ccc;
+                          width: 200px; /* Ajuste conforme necessário */
+                          box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Adiciona um leve sombreamento */
+                      }
+              
+                      button {
+                          padding: 10px 20px;
+                          border-radius: 20px;
+                          border: none;
+                          background-color: #007bff;
+                          color: white;
+                          cursor: pointer;
+                          box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Sombreamento */
+                      }
+              
+                      
+                      #protecaoSenha {
+                          background-color: #ffffff;
+                          padding: 40px;
+                          border-radius: 50px;
+                          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+                          display: flex;
+                          align-items: center;
+                          gap: 30px;
+                          backdrop-filter: blur(10px);
+                      }
+              
+                      #protecaoSenha input[type="password"] {
+                        padding: 8px 25px; /* Altura diminuída */
+                        border: 1px solid #ccc;
+                        border-radius: 15px;
+                        width: 200px; /* Largura aumentada */
+                        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+                        outline: none;
+                        transition: border-color 0.3s;
+                        color: #555;
+                        font-size: 18px;
+                    }
+              
+                      #protecaoSenha input[type="password"]::placeholder {
+                          color: #bbb;
+                      }
+              
+                      #protecaoSenha input[type="password"]:focus {
+                          border-color: #007bff;
+                      }
+              
+                      #protecaoSenha button {
+                          font-size: 13px;
+                          padding: 14px 30px;
+                          background-color: #007bff;
+                          color: white;
+                          border: none;
+                          border-radius: 15px;
+                          cursor: pointer;
+                          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                          transition: background-color 0.4s, transform 0.4s;
+                      }
+              
+                      #protecaoSenha button:hover {
+                          background-color: #0056b3;
+                          transform: translateY(-2px);
+                      }
+              
+                      #conteudoProtegido {
+                          display: none;
+                      }
+
+                      #myModal {
+                        display: none;
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: opacity 0.5s linear, visibility 0s linear 0.5s; /* Ajuste para visibilidade após a transição de opacidade */
+                      }
+
+                      #myModal.show {
+                        display: block; 
+                        opacity: 1; 
+                        visibility: visible; 
+                      }
+
+                                a {
+                                    color: #00aff4;
+                                    text-decoration: none;
+                                }
+
+                                a:hover {
+                                    text-decoration: underline;
+                                }
+
+                                img {
+                                    object-fit: contain;
+                                }
+
+                                .markdown {
+                                        max-width: 100%;
+                                        line-height: 1.3;
+                                        overflow-wrap: break-word;
+                                        font-family: Arial, sans-serif;
+                                        font-size: 16px;
+                                        font-weight: normal;
+                                        text-align: left;
+                                        margin: 1px;
+                                        padding: 4px;
+                                        text-decoration: none;
+                                        text-transform: none;
+                                        letter-spacing: normal;
+                                        word-spacing: normal;
+                                        text-shadow: none;
+                                        white-space: normal;
+                                        background-color: transparent;
+                                        border: none;
+                                }
+
+                                .preserve-whitespace {
+                                    white-space: pre-line;
+                                }
+
+
+                                .spoiler-text {
+                                    background-color: rgba(255, 255, 255, 0.1);
+                                    border-radius: 3px;
+                                }
+
+                                .spoiler-text--hidden {
+                                    cursor: pointer;
+                                    background-color: #202225;
+                                    color: rgba(0, 0, 0, 0);
+                                }
+
+                                .spoiler-text--hidden:hover {
+                                    background-color: rgba(32, 34, 37, 0.8);
+                                }
+
+                                .spoiler-text--hidden::selection {
+                                    color: rgba(0, 0, 0, 0);
+                                }
+
+                                .quote {
+                                  border-left: 5px solid #5C5E62;
+                                  color: #DCDDDE;
+                                  padding-left: 8px;
+                                  margin: 0 10px; 
+                                  border-radius: 6px;
+                                  display: block;
+                                  box-sizing: border-box; 
+                                }
+                                
+                                .quote::before {
+                                    color: #7a7a7a;
+                                    font-size: 0.85em;
+                                    content: "ㅤ/quote mensagemㅤ";
+                                    margin-right: 0.5em;
+                                    border: 2px solid #4f545c;
+                                    border-radius: 5px;
+                                 }
+
+                                .pre {
+                                    background-color: #1e1f22;
+                                    font-family: "Consolas", "Courier New", Courier, monospace;
+                                }
+
+                                .pre--multiline {
+                                    margin-top: 0.25em;
+                                    margin-bottom: 0.25em;
+                                    margin-right: 0.06em;
+                                    margin-left: 0.06em;
+                                    margin-bottom: 0.25em;
+                                    padding: 0.5em;
+                                    border: 2px solid #313338;
+                                    border-radius: 10px;
+                                    background-color: #313338;
+                                    color: #bbbbbb;
+                                }
+                                
+                                .pre--multiline.hljs {
+                                    background-color: #1e1f22;
+                                    color: #49bbbe;
+                                }
+
+                                .pre--inline {
+                                    background-color: #2b2d31;
+                                    color: #bbbbbb;
+                                    padding: 1px 5px;  /* Aumentado o valor do padding-left e padding-right */
+                                    border-radius: 6px;
+                                }
+                                
+                                .mention {
+                                    border-radius: 3px;
+                                    padding: 0 2px;
+                                    color: #7289da;
+                                    background-color: rgba(114, 137, 218, .1);
+                                    font-weight: 500;
+                                }
+
+                                .timestamp {
+                                    border-radius: 3px;
+                                    padding: 0 2px;
+                                    background-color: rgba(255, 255, 255, 0.06);
+                                }
+
+                                .emoji {
+                                    width: 1.325em;
+                                    height: 1.325em;
+                                    margin: 0 0.06em;
+                                    vertical-align: -0.4em;
+                                }
+
+                                .emoji--small {
+                                    width: 1em;
+                                    height: 1em;
+                                }
+
+                                .emoji--large {
+                                    width: 2.8em;
+                                    height: 2.8em;
+                                }
+
+                                .preamble {
+                                    display: grid;
+                                    margin: 0 0.3em 0.6em 0.3em;
+                                    max-width: 100%;
+                                    grid-template-columns: auto 1fr;
+                                }
+
+                                .preamble__guild-icon-container {
+                                    grid-column: 1;
+                                }
+
+                                .preamble__guild-icon {
+                                    max-width: 88px;
+                                    max-height: 88px;
+                                }
+
+                                .preamble__entries-container {
+                                    grid-column: 2;
+                                    margin-left: 0.6em;
+                                }
+
+                                .preamble__entry {
+                                    font-size: 1.4em;
+                                    color: #ffffff;
+                                }
+
+                                .preamble__entry--small {
+                                    font-size: 1em;
+                                }
+
+                                .chatlog {
+                                    max-width: 100%;
+                                }
+
+                                .chatlog__message-group {
+                                    display: grid;
+                                    margin: 0 0.6em;
+                                    padding: 0.9em 0;
+                                    border-top: 1px solid rgba(255, 255, 255, 0.1);
+                                    grid-template-columns: auto 1fr;
+                                }
+
+                                .chatlog__reference-symbol {
+                                    grid-column: 1;
+                                    margin: 8px 4px 4px 18px;
+                                    border-left: 2px solid #4f545c;
+                                    border-top: 2px solid #4f545c;
+                                    border-radius: 8px 0 0 0;
+                                }
+
+                                .chatlog__reference-symbol-below {
+                                    grid-column: 1;
+                                    margin: -10px 4px 10px 18px;
+                                    border-left: 2px solid #4f545c;
+                                    border-bottom: 2px solid #4f545c; 
+                                    margin-left: 20px; 
+                                    margin-right: 5px; 
+                                }
+
+                                .chatlog__reference {
+                                    display: flex;
+                                    grid-column: 2;
+                                    margin-bottom: 0.25em;
+                                    font-size: 0.875em;
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    align-items: center;
+                                    color: #b5b6b8;
+                                }
+
+                                .chatlog__reference-avatar {
+                                    border-radius: 50%;
+                                    width: 16px;
+                                    height: 16px;
+                                    margin-right: 0.25em;
+                                }
+
+                                .chatlog__reference-name {
+                                    margin-right: 0.3em;
+                                    font-weight: 600;
+                                    font-size: 15px; 
+
+                                }
+
+                                .chatlog__reference-content {
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                }
+
+                                .chatlog__reference-content a:hover {
+                                    text-decoration: none;
+                                }
+
+                                .chatlog__reference-link {
+                                    cursor: pointer;
+                                    color: #b5b6b8;
+                                }
+
+                                .chatlog__reference-link * {
+                                    display: inline;
+                                    pointer-events: none;
+                                }
+
+                                .chatlog__reference-link:hover {
+                                    color: #ffffff;
+                                }
+
+                                .chatlog__reference-link:hover *:not(.spoiler-text) {
+                                    color: #ffffff;
+                                }
+
+                                .chatlog__reference-edited-timestamp {
+                                    margin-left: 0.25em;
+                                    font-size: 0.8em;
+                                    color: rgba(255, 255, 255, 0.2);
+                                }
+
+                                .chatlog__role {
+                                    margin-left: 0.35em;
+                                    font-size: 1.00em;
+                                    color: rgba(255, 255, 75, 0.35);
+                                }
+
+                                .chatlog__author-avatar-container {
+                                    grid-column: 1;
+                                    width: 40px;
+                                    height: 40px;
+                                    margin-right: 16px;
+                                }
+
+                                .chatlog__author-avatar {
+                                    border-radius: 50%;
+                                    width: 40px;
+                                    height: 40px;
+                                    transition: transform 0.3s ease;
+                                    transform: rotate(10deg);
+                                }
+
+                                .chatlog__author-avatar:hover {
+                                    transform: scale(1.54); 
+                                }
+
+                                .chatlog__messages {
+                                    grid-column: 2;
+                                    min-width: 50%;
+                                }
+
+                                @keyframes softPulse {
+                                    0% { text-shadow: 0 0 1px #ffffff; }
+                                    50% { text-shadow: 0 0 2px #ffffff, 0 0 16px #ffffff; }
+                                    100% { text-shadow: 0 0 1px #ffffff; }
+                                }
+
+                                .chatlog__author-name {
+                                    font-weight: 600;
+                                    color: #ffffff;
+                                    font-size: 14.2px;
+                                    letter-spacing: 0.0px;
+                                    animation: softPulse 3s infinite;
+                                }
+
+                                .chatlog__timestamp {
+                                    margin-left: 0.3em;
+                                    font-size: 0.72em;
+                                    color: rgba(255, 255, 255, 0.2);
+                                }
+
+                                .chatlog__message {
+                                    padding: 0.1em 0.0em;
+                                    margin: 0 -0.6em;
+                                    background-color: transparent;
+                                    transition: background-color 1s ease;
+                                }
+
+                                .chatlog__message--highlighted {
+                                    background-color: rgba(114, 137, 218, 0.2);
+                                }
+
+                                .chatlog__message--pinned {
+                                    background-color: rgba(249, 168, 37, 0.05);
+                                }
+
+                                .chatlog__content {
+                                    font-size: 0.85em;
+                                    word-wrap: break-word;
+                                }
+
+                                .chatlog__edited-timestamp {
+                                    margin-left: 0.15em;
+                                    font-size: 0.8em;
+                                }
+
+                                .chatlog__attachment {
+                                    display: inline-block;
+                                    position: relative;
+                                    margin-top: 0.3em;
+                                    border-radius: 3px;
+                                    overflow: hidden;
+                                }
+
+                                .chatlog__attachment--hidden {
+                                    cursor: pointer;
+                                    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+                                }
+
+                                .chatlog__attachment--hidden * {
+                                    pointer-events: none;
+                                }
+
+                                .chatlog__attachment-spoiler-caption {
+                                    display: none;
+                                    z-index: 999;
+                                    position: absolute;
+                                    left: 50%;
+                                    top: 50%;
+                                    transform: translate(-50%, -50%);
+                                    padding: 0.4em 0.8em;
+                                    background-color: rgba(0, 0, 0, 0.9);
+                                    border-radius: 20px;
+                                    color: #dcddde;
+                                    font-size: 0.9em;
+                                    font-weight: 600;
+                                    letter-spacing: 0.05em;
+                                }
+
+                                .chatlog__attachment--hidden .chatlog__attachment-spoiler-caption {
+                                    display: block;
+                                }
+
+                                .chatlog__attachment--hidden:hover .chatlog__attachment-spoiler-caption {
+                                    color: #fff;
+                                }
+
+                                .chatlog__attachment-media {
+                                    vertical-align: top;
+                                    max-width: 45vw;
+                                    max-height: 500px;
+                                    border-radius: 3px;
+                                }
+
+                                .chatlog__attachment--hidden .chatlog__attachment-media {
+                                    filter: blur(44px);
+                                }
+
+                                .chatlog__attachment-generic {
+                                    width: 100%;
+                                    max-width: 520px;
+                                    height: 40px;
+                                    padding: 10px;
+                                    background-color: #2f3136;
+                                    border: 1px solid #292b2f;
+                                    border-radius: 3px;
+                                    overflow: hidden;
+                                }
+
+                                .chatlog__attachment--hidden .chatlog__attachment-generic {
+                                    filter: blur(44px);
+                                }
+
+                                .chatlog__attachment-generic-icon {
+                                    float: left;
+                                    width: 30px;
+                                    height: 100%;
+                                    margin-right: 10px;
+                                }
+
+                                .chatlog__attachment-generic-size {
+                                    color: #72767d;
+                                    font-size: 12px;
+                                }
+
+                                .chatlog__attachment-generic-name {
+                                    overflow: hidden;
+                                    white-space: nowrap;
+                                    text-overflow: ellipsis;
+                                }
+
+                                .chatlog__edited-timestamp {
+                                    color: rgba(255, 255, 255, 0.2);
+                                }
+
+                                .chatlog__embed {
+                                    display: flex;
+                                    margin-top: 0.3em;
+                                    max-width: 520px;
+                                    border-radius: 5px; 
+                                }
+
+
+                                .chatlog__embed-thumbnail img {
+                                    max-width: 80px; 
+                                    float: left;
+                                    margin-right: 10px;
+                                    border-radius: 5px; 
+                                }
+
+                                .chatlog__embed-color-pill {
+                                    flex-shrink: 0;
+                                    width: 0.25em;
+                                    border-top-left-radius: 3px;
+                                    border-bottom-left-radius: 3px;
+                                }
+
+                                .chatlog__embed-color-pill--default {
+                                    background-color: #202225;
+                                }
+
+                                .chatlog__embed-content-container {
+                                    background-color: #2b2d31;
+                                    padding: 5px;
+                                    border: 1px solid #4A4D52;
+                                    border-radius: 5px;
+                                }
+                                
+
+                                .chatlog__embed-content {
+                                    display: flex;
+                                    width: 100%;
+                                }
+
+                                .chatlog__embed-text {
+                                    flex: 1;
+                                }
+
+                                .adjusted-title {
+                                    padding-left: 10px;
+                                }
+                                
+                                .chatlog__embed-author {
+                                    display: flex;
+                                    margin-bottom: 0.3em;
+                                    align-items: center;
+                                }
+
+                                .chatlog__embed-author-icon {
+                                    margin-right: 0.5em;
+                                    width: 20px;
+                                    height: 20px;
+                                    border-radius: 50%;
+                                }
+
+                                .chatlog__embed-author-name {
+                                    font-size: 0.875em;
+                                    font-weight: 600;
+                                    color: #ffffff
+                                }
+
+                                .chatlog__embed-author-name-link {
+                                    color: #ffffff;
+                                }
+
+                                .chatlog__embed-title {
+                                    margin-bottom: 0.2em;
+                                    font-size: 0.875em;
+                                    font-weight: 600;
+                                    color: #ffffff;
+                                    padding-left: 10px;
+                                }
+
+                                .chatlog__embed-title a {
+                                    color: #89CFF0;
+                                    text-decoration: none;
+                                    font-weight: bold;
+                                }
+
+                                .chatlog__embed-title a:hover {
+                                    text-decoration: underline;
+                                }
+
+                                .chatlog__embed-description {
+                                    font-weight: 500;
+                                    font-size: 0.85em;
+                                    color: #dcddde;
+                                    padding-left: 10px;
+                                }
+
+                                .chatlog__embed-fields {
+                                    display: flex;
+                                    flex-wrap: wrap;
+                                    gap: 0 0.5em;
+                                }
+
+                                .chatlog__embed-field {
+                                    flex: 0;
+                                    min-width: 100%;
+                                    max-width: 506px;
+                                    padding-top: 0.6em;
+                                    font-size: 0.875em;
+                                }
+
+                                .chatlog__embed-field--inline {
+                                    flex: 1;
+                                    flex-basis: auto;
+                                    min-width: 150px;
+                                }
+
+                                .chatlog__embed-field-name {
+                                    margin-bottom: 0.2em;
+                                    font-weight: 600;
+                                    color: #ffffff;
+                                }
+
+                                .chatlog__embed-field-value {
+                                    font-weight: 500;
+                                    color: #dcddde;
+                                }
+
+                                .chatlog__embed-thumbnail {
+                                    flex: 0;
+                                    margin-left: 0.1em;
+                                    max-width: 80px;
+                                    max-height: 80px;
+                                    border-radius: 3px;
+                                }
+
+                                .chatlog__embed-image-container {
+                                    margin-top: 0.6em;
+                                }
+
+                                .chatlog__embed-image {
+                                    max-width: 500px;
+                                    max-height: 400px;
+                                    border-radius: 3px;
+                                }
+
+                                .chatlog__embed-footer {
+                                    margin-top: 0.6em;
+                                    color: #dcddde;
+                                }
+
+                                .chatlog__embed-footer-icon {
+                                    margin-right: 0.2em;
+                                    width: 20px;
+                                    height: 20px;
+                                    border-radius: 50%;
+                                    vertical-align: middle;
+                                }
+
+                                .chatlog__embed-footer-text {
+                                    vertical-align: middle;
+                                    font-size: 0.75em;
+                                    font-weight: 500;
+                                }
+
+                                .chatlog__embed-plainimage {
+                                    vertical-align: top;
+                                    max-width: 45vw;
+                                    max-height: 500px;
+                                    border-radius: 3px;
+                                }
+
+                                .chatlog__embed-spotify {
+                                    border: 0;
+                                }
+
+                                .chatlog__embed-youtube-container {
+                                    margin-top: 0.6em;
+                                }
+
+                                .chatlog__embed-youtube {
+                                    border: 0;
+                                    border-radius: 3px;
+                                }
+
+                                .chatlog__reactions {
+                                    display: flex;
+                                }
+
+                                .chatlog__reaction {
+                                    display: flex;
+                                    align-items: center;
+                                    margin: 0.35em 0.1em 0.1em 0.1em;
+                                    padding: 0.2em 0.35em;
+                                    background-color: rgba(255, 255, 255, 0.05);
+                                    border-radius: 3px;
+                                }
+
+                                .chatlog__reaction-count {
+                                    min-width: 9px;
+                                    margin-left: 0.35em;
+                                    font-size: 0.875em;
+                                    color: rgba(255, 255, 255, 0.3);
+                                }
+
+                                .chatlog__bot-tag {
+                                    position: relative;
+                                    top: -.1em;
+                                    margin-left: 0.3em;
+                                    padding: 0.05em 0.3em;
+                                    border-radius: 3px;
+                                    line-height: 1.3;
+                                    background-color: #5865F2;
+                                    color: #ffffff;
+                                    font-size: 0.625em;
+                                    font-weight: 500;
+                                }
+
+                                .postamble {
+                                    margin: 1.4em 0.3em 0.6em 0.3em;
+                                    padding: 1em;
+                                    border-top: 1px solid rgba(255, 255, 255, 0.1);
+                                }
+
+                                .postamble__entry {
+                                    color: #ffffff;
+                                }
+
+                                @keyframes rainbow {
+                                    0% {border-top-color: #f06;}
+                                    14% {border-top-color: #f80;}
+                                    28% {border-top-color: #ff0;}
+                                    42% {border-top-color: #8f0;}
+                                    57% {border-top-color: #09f;}
+                                    71% {border-top-color: #607;}
+                                    85% {border-top-color: #f09;}
+                                    100% {border-top-color: #f06;}
+                                }
+                                
+                                .hr {
+                                    border: none; 
+                                    border-top: 2px solid #399; 
+                                    width: 50%;
+                                    margin: 15px auto; 
+                                    animation: rainbow 10s linear infinite; /* Efeito rainbow com 10 segundos de duração */
+                                }
+                        
+
+                                .header {
+                                    background-color: #f1f1f1;
+                                    padding: 10px;
+                                    text-align: center;
+                                    border-bottom: 2px solid #ddd;
+                                    margin-bottom: 20px;
+                                    font-size: 1.5rem;
+                                    transition: background-color 0.4s ease;
+                                }
+                                
+                               
+                                
+                                .header img {
+                                    border-radius: 50%;
+                                    box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.3);
+                                    transform: rotate(0deg) scale(1.30);
+                                    transition: transform 2s, box-shadow 2s;
+                                }
+                                
+                                @keyframes neonSnake {
+                                    0% {
+                                        background-position: 200% 0;
+                                    }
+                                    100% {
+                                        background-position: -100% 0;
+                                    }
+                                }
+
+                                .guild-name {
+                                    font-size: 1.5rem; 
+                                    color: transparent;
+                                    font-weight: bold; 
+                                    margin-top: 10px;
+                                    opacity: 1.0;
+                                    transition: opacity 2s ease-in-out;
+
+                                    /* Gradiente com cores mais intensas e vibrantes */
+                                    background: linear-gradient(90deg, 
+                                        rgba(255,0,0,1), 
+                                        rgba(255,165,0,1), 
+                                        rgba(255,255,0,1), 
+                                        rgba(152,251,152,1), 
+                                        rgba(0,128,0,1), 
+                                        rgba(32,178,170,1), 
+                                        rgba(0,0,255,1), 
+                                        rgba(75,0,130,1), 
+                                        rgba(143,0,255,1), 
+                                        rgba(238,130,238,1),
+                                        rgba(255,0,0,1));
+                                    background-size: 300% auto; 
+                                    animation: neonSnake 20s infinite;
+
+                                    -webkit-background-clip: text;
+                                    background-clip: text;
+
+                                    text-shadow: 0 0 5px rgba(173,216,230,0.6);
+
+                                }
+
+                                
+                                
+                                .header img:hover {
+                                    transform: rotate(360deg) scale(1.50);
+                                    animation: rainbowRotate 24s infinite;
+                                
+                                }
+                                
+                                .header img:hover + .guild-name {
+                                    opacity: 1; 
+                                }
+                                
+                                .header:hover {
+                                    background-color: #e9e9e9;
+                                }
+                                
+
+                                @keyframes rainbowSlide {
+                                    0% {background-position: 100% 0%, 100% 100%;}
+                                    100% {background-position: 0% 0%, 0% 100%;}
+                                }
+                                
+                                .channel-name {
+                                    font-weight: bold;
+                                    color: #333333;
+                                    font-size: 2.4rem;
+                                    background-image: 
+                                        linear-gradient(to right, 
+                                            #FFA07A, #FFEC8B, #98FB98, #87CEFA, #DDA0DD, #FFB6C1, #FFDAB9, #C1FFC1, #B0E0E6, #FFA07A
+                                        ), 
+                                        linear-gradient(to right, 
+                                            #FFA07A, #FFEC8B, #98FB98, #87CEFA, #DDA0DD, #FFB6C1, #FFDAB9, #C1FFC1, #B0E0E6, #FFA07A
+                                        );
+                                    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5); /* Efeito de brilho */
+                                  background-size: 200% 3px;
+                                    padding: 12px 0 12px 0; /* Aumentar o padding inferior */
+                                    background-repeat: no-repeat;
+                                    background-position: 100% 0%, 100% 100%; /* Definido para a parte superior e inferior */
+                                    animation: rainbowSlide 6s linear infinite; 
+                                    cursor: pointer;
+                                }
+                                
+                            
+                                .chatlog__date {
+                                    font-size: 0.8rem; 
+                                    display: block; 
+                                    text-align: right;
+                                    margin-top: -10px; 
+                                }
+
+                                .discord-button {
+                                    background-color: blue; /* Cor padrão */
+                                    color: white;
+                                    border: none;
+                                    padding: 10px 20px;
+                                    margin-top: 10px;
+                                    border-radius: 5px;
+                                    cursor: pointer;
+                                    transition: background-color 0.3s, transform 0.1s; /* Adiciona uma transição ao background-color e ao transform */
+                                }
+                            
+                                .discord-button:hover {
+                                    background-color: lightblue; /* Cor quando o mouse está sobre o botão */
+                                }
+                            
+                                .discord-button:active {
+                                    transform: scale(0.95); /* Reduz o tamanho do botão quando é clicado */
+                                }
+
+                                .video-player {
+                                    position: relative;
+                                    width: 320px;
+                                    height: 240px;
+                                }
+                            
+                                .controls {
+                                    position: absolute;
+                                    bottom: 0;
+                                    width: 100%;
+                                    background-color: rgba(0, 0, 0, 0.5);
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    gap: 10px;
+                                }
+                            
+                                button {
+                                    background-color: white;
+                                    border: none;
+                                    padding: 4px 8px; /* Ajuste o padding aqui para alterar o tamanho do botão */
+                                    cursor: pointer;
+                                    font-size: 12px; /* Ajuste o tamanho da fonte aqui */
+                                }
+                                
+                                .thumbnail {
+                                    width: auto;
+                                    max-width: 128px; 
+                                    max-height: 256px;
+                                    border-radius: 5px;
+                                    padding: 4px;
+                                    opacity: 0.4;
+                                    transition: box-shadow 0.50s ease, opacity 0.65s ease; 
+                                }
+                                
+                                .thumbnail:hover {
+                                    box-shadow: 0px 0px 20px 0px rgba(255, 255, 255, 0.4);
+                                    opacity: 1;
+                                    cursor: pointer; /* Adiciona esta linha */
+                                }
+
+                                @keyframes pulse {
+                                    0%, 100% { 
+                                        box-shadow: 0 0 5px #FFF;
+                                    }
+                                    50% { 
+                                        box-shadow: 0 0 12px #FFF, 0 0 26px #FFF; 
+                                    }
+                                }
+                                
+                                @keyframes fadeOutPulse {
+                                    from {
+                                        box-shadow: 0 0 5px #FFF;
+                                    }
+                                    to {
+                                        box-shadow: 0 0 0px transparent;
+                                    }
+                                }
+                                
+                                .shadow-container {
+                                    display: inline-block;
+                                    border-radius: 20px;
+                                    overflow: hidden;
+                                }
+                                
+                                .focused-message {
+                                    animation: pulse 1.5s infinite; 
+                                    border-radius: 10px;  
+                                
+                                }
+                                
+                                .fade-out {
+                                    animation: fadeOutPulse 3s forwards;
+                                    border-radius: 10px;  
+                                
+                                }
+
+                                .error-text {
+                                    color: #fff;
+                                    display: inline-block;
+                                }
+                                
+                                .error-text span {
+                                    position: relative;
+                                    display: inline-block;
+                                    animation: glitchChar 1s infinite alternate;
+                                }
+                                
+                                @keyframes glitchChar {
+                                    0%, 100% { transform: translateY(0); }
+                                    33% { transform: translateY(-1px); }
+                                    66% { transform: translateY(1px); }
+                                }
+                                
+                                .error-text span:nth-child(odd) {
+                                    animation-delay: 0.2s;
+                                }
+                                
+                                .error-text span:nth-child(4n) {
+                                    animation-delay: 0.4s;
+                                }
+                                
+                                .error-text span:nth-child(5n) {
+                                    animation-delay: 0.6s;
+                                }
+                                .tooltip {
+                                  position: relative;
+                                  display: inline-block;
+                                }
+                                
+                                .tooltipIcon {
+                                  background-color: #555;
+                                  color: #fff;
+                                  text-align: center;
+                                  border-radius: 50%;
+                                  width: 25px;
+                                  height: 25px;
+                                  display: inline-block;
+                                  line-height: 25px;
+                                  cursor: help;
+                                }
+                                
+                                .tooltipText {
+                                  visibility: hidden;
+                                  width: 220px;
+                                  background-color: #555;
+                                  color: #fff;
+                                  text-align: center;
+                                  border-radius: 6px;
+                                  padding: 20px 20;
+                                  position: absolute;
+                                  z-index: 1;
+                                  bottom: 125%;
+                                  left: 50%;
+                                  margin-left: -110px; /* Use metade da largura do tooltipText */
+                                  opacity: 0;
+                                  transition: opacity 0.3s;
+                                }
+                                
+                                .tooltip:hover .tooltipText {
+                                  visibility: visible;
+                                  opacity: 1;
+                                }
+
+                                .modal {
+                                  display: none; /* Escondido por padrão */
+                                  position: fixed; /* Fica em posição fixa */
+                                  z-index: 1; /* Fica no topo */
+                                  padding-top: 100px; /* Localização do box */
+                                  left: 0;
+                                  top: 0;
+                                  width: 100%; /* Largura total */
+                                  height: 100%; /* Altura total */
+                                  overflow: auto; /* Habilita scroll se necessário */
+                                  background-color: rgb(0,0,0); /* Fallback color */
+                                  background-color: rgba(0,0,0,0.9); /* Cor do background com opacidade */
+                                }
+
+                                /* Estilo da Imagem Modal */
+                                .modal-content {
+                                  margin: auto;
+                                  display: block;
+                                  width: 80%;
+                                  max-width: 700px;
+                                }
+
+                                /* Caption da Imagem */
+                                #caption {
+                                  margin: auto;
+                                  display: block;
+                                  width: 80%;
+                                  max-width: 700px;
+                                  text-align: center;
+                                  color: #ccc;
+                                  padding: 10px 0;
+                                  height: 150px;
+                                }
+
+                                /* Botão de Fechar (x) */
+                                .close {
+                                  position: absolute;
+                                  top: 15px;
+                                  right: 35px;
+                                  color: #f1f1f1;
+                                  font-size: 40px;
+                                  font-weight: bold;
+                                  transition: 0.3s;
+                                }
+
+                                .close:hover,
+                                .close:focus {
+                                  color: #bbb;
+                                  text-decoration: none;
+                                  cursor: pointer;
+                                }
+                                
+                        </style>
+                        </head>
+                        <body>
+                              <div id="protecaoSenha">
+                              <div class="tooltip">
+                              <span class="tooltipIcon" onmouseover="mostrarTooltip()" onclick="mostrarTooltip()">?</span>
+                              <span class="tooltipText" id="tooltipText">
+                              Para acessar o transcript, utilize a chave fornecida via mensagem direta (DM). Se encontrar dificuldades, entre na call de suporte.</span>
+                              </div>
+                              <input type="password" id="senha" placeholder="Digite a chave">
+                              <div id="mensagemErro" class="mensagemErro">Número de tentativas excedido!</div> <!-- Mensagem logo após o campo de senha -->
+                              <button onclick="verificarSenha()">Entrar</button>
+                              </div>
+
+                              <div id="myModal" class="modal">
+                                <span class="close">&times;</span>
+                                <img class="modal-content" id="img01">
+                                <div id="caption"></div>
+                              </div>
+
+                              <script>
+
+                              // Função para abrir o modal
+                              function openModal(src, alt) {
+                                var modal = document.getElementById('myModal');
+                                modal.style.display = "block"; // Exibe o modal
+                                modal.style.opacity = 1; // Define a opacidade para 1
+                                modal.style.visibility = "visible"; // Torna o modal visível
+                                document.getElementById('img01').src = src;
+                                document.getElementById('caption').innerHTML = alt;
+                              }
+                              
+                              // Fechar o modal com o "X"
+                              var span = document.getElementsByClassName("close")[0];
+                              span.onclick = function() {
+                                var modal = document.getElementById('myModal');
+                                modal.style.opacity = 0; // Inicia a transição para ficar transparente
+                                modal.style.visibility = "hidden"; // Torna o modal invisível após a transição
+                                setTimeout(function() {
+                                  modal.style.display = "none"; // Esconde o modal após a transição
+                                }, 500); // Ajuste o tempo de acordo com a duração da sua transição
+                              }
+                              
+                              // Fechar o modal clicando fora dele
+                              window.onclick = function(event) {
+                                var modal = document.getElementById('myModal');
+                                if (event.target == modal) {
+                                  modal.style.opacity = 0;
+                                  modal.style.visibility = "hidden";
+                                  setTimeout(function() {
+                                    modal.style.display = "none";
+                                  }, 500);
+                                }
+                              }
+                              
+                              // Fechar o modal com a tecla ESC
+                              document.onkeydown = function(event) {
+                                var modal = document.getElementById('myModal');
+                                if (event.keyCode == 27) { // Código da tecla ESC
+                                  modal.style.opacity = 0;
+                                  modal.style.visibility = "hidden";
+                                  setTimeout(function() {
+                                    modal.style.display = "none";
+                                  }, 500);
+                                }
+                              }                              
+
+                              function aplicarEstiloAposLogin() {
+                                // Aplica o estilo padrão ao body
+                                document.body.style.fontFamily = '"Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif';
+                                document.body.style.backgroundColor = "#36393e";
+                                document.body.style.color = "#dcddde";
+                                document.body.style.fontSize = "17px";
+                                document.body.style.fontWeight = "400";
+                                document.body.style.display = "block";
+                                document.body.style.alignItems = "normal";
+                                document.body.style.justifyContent = "normal";
+                                document.body.style.height = "auto"; // Ajuste conforme necessário para a página de transcript
+                                document.body.style.background = "none";
+                                document.body.style.margin = "0"; // Mantém a margem zerada
+                                document.body.style.padding = "0"; // Mantém o padding zerado
+                                // Remove o gradiente de fundo, se aplicado anteriormente
+                                document.body.style.background = "#36393e"; // Define o fundo para a cor sólida padrão
+                              }
+
+                              var tentativas = 0;
+
+                              function verificarSenha() {
+                              var senha = document.getElementById("senha").value;
+                              tentativas++;
+
+                              if (senha == "cpxrj") { 
+                                  document.getElementById("conteudoProtegido").style.display = "block";
+                                  document.getElementById("protecaoSenha").style.display = "none";
+                                  aplicarEstiloAposLogin();
+                              } else if (tentativas >= 4) {
+                                  document.getElementById("mensagemErro").style.display = "block";
+                              } else {
+                                  alert("Senha incorreta!");
+                              }
+                              }
+
+                              </script>
+
+                              <div id="conteudoProtegido" style="display: none;">
+
+                            <div class="header"><br>
+                                <img src="data:image/webp;base64,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" alt="Logo do 💎 ComplexoRJ - Season5" width="128" /> 
+                                <br><br><div class="guild-name"><strong>💎 ComplexoRJ - Season5</strong></div>
+                            </div>
+                            <div class="header channel-name"><strong>staff-4241</strong></div>
+                            <script>
+                                function scrollToMessage(event, messageId) {
+                                    event.preventDefault();
+
+                                    const targetMessage = document.getElementById("message-" + messageId);
+                                    if (targetMessage) {
+                                        targetMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                                        targetMessage.classList.add('focused-message');
+
+                                        setTimeout(() => {
+                                            targetMessage.classList.remove('focused-message');
+                                            targetMessage.classList.add('fade-out');
+                                            
+                                            setTimeout(() => {
+                                                targetMessage.classList.remove('fade-out');
+                                            }, 3000);
+                                        }, 3000);
+                                    }
+                                }
+                            </script>
+                        </body>
+                        
+                        <div class="chatlog">
+                            <div class="chatlog__message-group">
+                                <div class="chatlog__author-avatar-container">
+                                    <img class="chatlog__author-avatar" src="data:image/webp;base64,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" alt="Complexo RJ">
+                                </div>
+                                <div class="chatlog__messages">
+                                <span class="chatlog__author-name" data-user-id="1110249022591074476">[BOT] Complexo RJ - :</span>
+                                <span class="chatlog__timestamp">(11/02/2024, 22:51:28)</span>
+                                    <div class="chatlog__message" data-message-id="1206417258398748742" id="message-1206417258398748742" title="Mensagem enviada: 2/11/2024, 10:51:28 PM">
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown preserve-whitespace"><span style="color: #5F9CC2">@comendador mano #61049<span class="chatlog__role">(1202313142613319712)</span></span> </div>
+                                        </div>
+                                <div class="chatlog__embed">
+                                    <div class="chatlog__embed-color-pill" style="background-color: rgb(255, 0, 0);"></div>
+                                    <div class="chatlog__embed-content-container">
+                                        <div class="chatlog__embed-content">
+                                            
+                                            <div class="chatlog__embed-text">
+                                                
+                                                <div class="chatlog__embed-description">
+                                                    <div class="markdown preserve-whitespace">Bem-vindo(a), para que o <strong>Responsável STAFF</strong> resolva o seu caso de forma rápida e prática, preencha o formulário abaixo:<br><div class="quote"><br><strong>Meu ID:</strong><br><strong>ID dos Envolvidos:</strong><br><strong>Data e hora do ocorrido:</strong><br><strong>Descrição do Ocorrido:</strong><br><strong>Provas:</strong><br></div>                                                    <div class="chatlog<u>embed-content-container"><div class="chatlog</u>embed-content"><div class="chatlog__embed-text"><div class="pre pre--multiline nohighlight">Apresente todo o contexto do ocorrido com provas no YouTube, Medal, Clipchamps, etc, após isso, aguarde pacientemente até que um STAFF possa analisar o seu caso.</div></div></div></div></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chatlog">
+                            <div class="chatlog__message-group">
+                                <div class="chatlog__author-avatar-container">
+                                    <img class="chatlog__author-avatar" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAMAAABrrFhUAAAAjVBMVEX6phr6qyj7wWH8zX78x3D8wWH7vFP+47j+9OP/////+fH6sTf+9OL92Jv+6cb904z80o37t0X++vH93qn90436sTb7sTb7x3D80oz93an+7tT92Zv7wmH9zX/8zH7+79P7tkX92Jr82Jr/+vH+6Mb/9OP/9OL7qyj947j6rCj+79T8zX/95Lj7sTf915vvhd1yAAAEbklEQVR4AezBgQAAAACAoP2pF6kCAAAAAAAAAAAAAAAAAAAAAIDZuc/tRpUYAMAisAK54AAJnvFNZ5zYTnn/t7t9dXJc0Y4N8o6//0o8QlMpB0VXcQKt/Ygx+o3ajnGaEdGgdZuGGRGN0hh/h8aPc/ppAi1dc0g+RjhfRZwTE5TAsKTv8riAM4TjjJisBCpaN6rw3FpfEpOUAI8A55yD4qakHSayEWDNaHwL6kXc7/eUQF1cTWMztsyYeIpYw78y2i1PQLXhjovPqrGdlbRTmaemor1Gld4ywJw6kSKoNKbO/AEKJdQhVNj9M+rQKAJtKmJBdoKCWJidIKOOjUCVa+rcBBQZUvcGt4GOgCwHNe6oFxjoCMhmetaAPbkHFaKMejKIAp0C2UTLJiDoEqioRxMda6CgS6CiXk3CLgAFJVBRzyYKpoCQS+CBKOwSyIiCLoGEFIihP4+kQA69QVIBA50DWapzERTAMJiQEhONQ2AAw+ATqYGBDoHsOdBVIBuEughgqK4HBNAHMqKg+wAShd0HXkiVZ9WroCZzs4YE5CEjvfsAF9fwjyKZy0Nm1FatdB/wit+D5uKQu7nSY5G0Zdd8E48c6yFG5564+cVtmvEI0TQRPknbz8yRQ1gBXYqphQVss6A93K8vOmN1Q8BrDdssG9pNHsIsdCnzOKcxRw1hI22rgEENIL2egpB+VwJ3XiX54hGyxx10x3j9HvQIUbIdcHRYBLss5UW8VLYUauiglXwIHQhC+h0Fl55H1c4jZI9I1WFIetwEWFVrwSkdZv0TIF15TaErRmcXeFa1EB7JR7SR5wGUVXAcJpgGRSFALax0HQYg7IJeIQqOBJae57SVR4iKefDJ87GFzCNExXYI/R5bSDxCdNwduSOfEogycQhwiI6FQOz1fu9YHnJNuhJgfF5qevcK2c+ouy2YwLpEHoLqbhBaau1GfjHlIczqSwBVt8Bg+OERoigBjiQq3P91Jf8QlupKACtza21aniyE5T0kQI9LAi4JuCTgkoBLAjpwScAlAZcEWFLKXhIQwmPCCs4DDCllejgTVCVWdHOYXDyno3mNVwoORcUP7OCCjsJhy36HWu4M8dHmp5mTp8a8te54BXQkaeiAUcLlYj1y0Fjk/1nSAU0MnflcUfsUyHPArX8TfLPZ1dAlQ5IUABpHIrMvBIY5qbn87HMuSwG8oXENtdC4r7s3WG++nsvPTNMmBbfwXXH35Wa0U7b4mhbwXXRTkrbLzz6t6JCfQYFT82Wdm2X/cc5aM72r32ANLkrSd/mlb0Hlp914v/6APpmTzs7YfpnA1PUDe8qzF1tD/z7d6R7cKQ6tkXXA+cn26C+6m88SJ3lzSmDZKG8+Q7dnV+ThQVPz5cOhPckZdIqg0+f6rqepwdtnI5j4tA0G8dE/2uiu3oCpLwN35BsxjSlAPz4A4BngOJ2g4Q3y2eQggSNJ/mn9G5ybQuWf+qs9OJABAAAAGORvfY+vAgAAAAAAAAAAAAAAAAAAAABYCfy25L0QL4/pAAAAAElFTkSuQmCC" alt="comendadormano_81774">
+                                </div>
+                                <div class="chatlog__messages">
+                                <span class="chatlog__author-name" data-user-id="1202313142613319712">comendador mano #61049 :</span>
+                                <span class="chatlog__timestamp">(11/02/2024, 22:51:43)</span>
+                                    <div class="chatlog__message" data-message-id="1206417319316688936" id="message-1206417319316688936" title="Mensagem enviada: 2/11/2024, 10:51:43 PM">
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown preserve-whitespace">id 61019 </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chatlog">
+                            <div class="chatlog__message-group">
+                                <div class="chatlog__author-avatar-container">
+                                    <img class="chatlog__author-avatar" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAMAAABrrFhUAAAAjVBMVEX6phr6qyj7wWH8zX78x3D8wWH7vFP+47j+9OP/////+fH6sTf+9OL92Jv+6cb904z80o37t0X++vH93qn90436sTb7sTb7x3D80oz93an+7tT92Zv7wmH9zX/8zH7+79P7tkX92Jr82Jr/+vH+6Mb/9OP/9OL7qyj947j6rCj+79T8zX/95Lj7sTf915vvhd1yAAAEbklEQVR4AezBgQAAAACAoP2pF6kCAAAAAAAAAAAAAAAAAAAAAIDZuc/tRpUYAMAisAK54AAJnvFNZ5zYTnn/t7t9dXJc0Y4N8o6//0o8QlMpB0VXcQKt/Ygx+o3ajnGaEdGgdZuGGRGN0hh/h8aPc/ppAi1dc0g+RjhfRZwTE5TAsKTv8riAM4TjjJisBCpaN6rw3FpfEpOUAI8A55yD4qakHSayEWDNaHwL6kXc7/eUQF1cTWMztsyYeIpYw78y2i1PQLXhjovPqrGdlbRTmaemor1Gld4ywJw6kSKoNKbO/AEKJdQhVNj9M+rQKAJtKmJBdoKCWJidIKOOjUCVa+rcBBQZUvcGt4GOgCwHNe6oFxjoCMhmetaAPbkHFaKMejKIAp0C2UTLJiDoEqioRxMda6CgS6CiXk3CLgAFJVBRzyYKpoCQS+CBKOwSyIiCLoGEFIihP4+kQA69QVIBA50DWapzERTAMJiQEhONQ2AAw+ATqYGBDoHsOdBVIBuEughgqK4HBNAHMqKg+wAShd0HXkiVZ9WroCZzs4YE5CEjvfsAF9fwjyKZy0Nm1FatdB/wit+D5uKQu7nSY5G0Zdd8E48c6yFG5564+cVtmvEI0TQRPknbz8yRQ1gBXYqphQVss6A93K8vOmN1Q8BrDdssG9pNHsIsdCnzOKcxRw1hI22rgEENIL2egpB+VwJ3XiX54hGyxx10x3j9HvQIUbIdcHRYBLss5UW8VLYUauiglXwIHQhC+h0Fl55H1c4jZI9I1WFIetwEWFVrwSkdZv0TIF15TaErRmcXeFa1EB7JR7SR5wGUVXAcJpgGRSFALax0HQYg7IJeIQqOBJae57SVR4iKefDJ87GFzCNExXYI/R5bSDxCdNwduSOfEogycQhwiI6FQOz1fu9YHnJNuhJgfF5qevcK2c+ouy2YwLpEHoLqbhBaau1GfjHlIczqSwBVt8Bg+OERoigBjiQq3P91Jf8QlupKACtza21aniyE5T0kQI9LAi4JuCTgkoBLAjpwScAlAZcEWFLKXhIQwmPCCs4DDCllejgTVCVWdHOYXDyno3mNVwoORcUP7OCCjsJhy36HWu4M8dHmp5mTp8a8te54BXQkaeiAUcLlYj1y0Fjk/1nSAU0MnflcUfsUyHPArX8TfLPZ1dAlQ5IUABpHIrMvBIY5qbn87HMuSwG8oXENtdC4r7s3WG++nsvPTNMmBbfwXXH35Wa0U7b4mhbwXXRTkrbLzz6t6JCfQYFT82Wdm2X/cc5aM72r32ANLkrSd/mlb0Hlp914v/6APpmTzs7YfpnA1PUDe8qzF1tD/z7d6R7cKQ6tkXXA+cn26C+6m88SJ3lzSmDZKG8+Q7dnV+ThQVPz5cOhPckZdIqg0+f6rqepwdtnI5j4tA0G8dE/2uiu3oCpLwN35BsxjSlAPz4A4BngOJ2g4Q3y2eQggSNJ/mn9G5ybQuWf+qs9OJABAAAAGORvfY+vAgAAAAAAAAAAAAAAAAAAAABYCfy25L0QL4/pAAAAAElFTkSuQmCC" alt="comendadormano_81774">
+                                </div>
+                                <div class="chatlog__messages">
+                                <span class="chatlog__author-name" data-user-id="1202313142613319712">comendador mano #61049 :</span>
+                                <span class="chatlog__timestamp">(11/02/2024, 22:52:16)</span>
+                                    <div class="chatlog__message" data-message-id="1206417460236914688" id="message-1206417460236914688" title="Mensagem enviada: 2/11/2024, 10:52:16 PM">
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown preserve-whitespace">fui banido do nada ate agora nao obtive retorno sobre o acontecido </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chatlog">
+                            <div class="chatlog__message-group">
+                                <div class="chatlog__author-avatar-container">
+                                    <img class="chatlog__author-avatar" src="data:image/webp;base64,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" alt="barbaraevans">
+                                </div>
+                                <div class="chatlog__messages">
+                                <span class="chatlog__author-name" data-user-id="574628879164244048">[COO] Bárbara  👑 :</span>
+                                <span class="chatlog__timestamp">(12/02/2024, 22:36:48)</span>
+                                    <div class="chatlog__message" data-message-id="1206775957071855696" id="message-1206775957071855696" title="Mensagem enviada: 2/12/2024, 10:36:48 PM">
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown preserve-whitespace">Olá <span style="color: #5F9CC2">@comendador mano #61049<span class="chatlog__role">(1202313142613319712)</span></span>, tudo bem?
+<ul style="list-style-type: disc; padding-left: 20px;">
+<li>Esse canal é apenas para denúncia STAFF, mas analisando aqui você não está banido, não.</li>
+</ul> </div><br><img class="thumbnail" src="data:image/png;base64,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" alt="Anexo 1" style="width:100%;max-width:300px" onclick="openModal(this.src, 'Anexo 1')">
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chatlog">
+                            <div class="chatlog__message-group">
+                                <div class="chatlog__author-avatar-container">
+                                    <img class="chatlog__author-avatar" src="data:image/webp;base64,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" alt="Complexo RJ">
+                                </div>
+                                <div class="chatlog__messages">
+                                <span class="chatlog__author-name" data-user-id="1110249022591074476">[BOT] Complexo RJ - :</span>
+                                <span class="chatlog__timestamp">(12/02/2024, 22:36:55)</span>
+                                    <div class="chatlog__message" data-message-id="1206775985857634324" id="message-1206775985857634324" title="Mensagem enviada: 2/12/2024, 10:36:55 PM">
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown preserve-whitespace">✅ | <span style="color: #5F9CC2">@[COO] Bárbara  👑<span class="chatlog__role">(574628879164244048)</span></span> enviou uma notificação para <span style="color: #5F9CC2">@comendador mano #61049<span class="chatlog__role">(1202313142613319712)</span></span>. </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chatlog__message-group">
+                            <div class="chatlog__reference-symbol"></div>
+                            <div class="chatlog__reference">
+                                <img class="chatlog__reference-avatar" src="data:image/webp;base64,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" alt="Avatar" loading="lazy">
+                                <span class="chatlog__reference-name" title="Complexo RJ">[BOT] Complexo RJ - :</span>
+                                <div class="chatlog__reference-content">
+                                     <span class="chatlog__reference-link" onclick="scrollToMessage(event, '1206417258398748742')">
+                                      <span style="color: #5F9CC2">@comendador mano #61049<span class="chatlog__role">(1202313142613319712)</span></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="chatlog__author-avatar-container">
+                                <img class="chatlog__author-avatar" src="data:image/webp;base64,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" alt="Avatar">
+                            </div>
+                            <div class="chatlog__messages">
+                                <span class="chatlog__author-name" title="Complexo RJ" data-user-id="1110249022591074476">[BOT] Complexo RJ - :</span>
+                                <span class="chatlog__timestamp">(13/02/2024, 14:47:31)</span>
+                                <div class="chatlog__message" data-message-id="1207020244170706984" id="message-1207020244170706984" title="Mensagem enviada: 2/13/2024, 2:47:31 PM">
+                                    <div class="chatlog__embed-description">
+                                        <div class="markdown">
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                            <div class="chatlog__embed">
+                                                <div class="chatlog__embed-color-pill" style="background-color: rgb(0, 255, 0);"></div>
+                                                <div class="chatlog__embed-content-container">
+                                                    <div class="chatlog__embed-content">
+                                                        
+                                                        <div class="chatlog__embed-text">
+                                                            
+                                                            <div class="chatlog__embed-title">
+                                                                <a href="#" target="_blank">✅ TRANSCRIPT GERADO</a>
+                                                            </div>
+                                                            <div class="chatlog__embed-description">
+                                                                <div class="markdown preserve-whitespace"><img src="https://cdn.discordapp.com/emojis/1156032672611708979.png?size=96&quality=lossless" alt="setadupla" class="emoji"> O ticket será fechado automaticamente em <strong>7 segundos</strong>.</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
+                            </body>
+                            </html>
+                            
