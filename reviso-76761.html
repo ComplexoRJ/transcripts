@@ -1,0 +1,1411 @@
+
+                        <html>
+                        <head>
+                            <title>revisão-76761</title>
+                        <style>
+                        body {
+                          background-color: #36393e;
+                          color: #dcddde;
+                          font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+                          font-size: 17px;
+                          font-weight: 400;
+                          margin: 0;
+                          padding: 0;
+                          display: flex;
+                          justify-content: center;
+                          align-items: center;
+                          height: 100vh;
+                      }
+    
+                          .togglePassword {
+                            cursor: pointer;
+                            position: absolute;
+                            margin-left: -30px;
+                            margin-top: 10px;
+                            color: #007bff;
+                        }
+      
+                  
+                          #protecaoSenha {
+                              display: flex;
+                              flex-direction: column; /* Mantém os elementos em uma coluna */
+                              align-items: normal; /* Centraliza os elementos horizontalmente */
+                              gap: 10px; /* Espaçamento entre os elementos */
+                              position: relative; /* Para posicionar corretamente o ícone de visualização da senha */
+                          }
+                  
+                          .mensagemErro {
+                          font-size: 13px;
+    
+                              color: red;
+                              display: none; /* Inicialmente escondido */
+                          }
+              
+                      input[type=password] {
+                          padding: 10px;
+                          border-radius: 20px;
+                          border: 1px solid #ccc;
+                          width: 200px; /* Ajuste conforme necessário */
+                          box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Adiciona um leve sombreamento */
+                      }
+              
+                      button {
+                          padding: 10px 20px;
+                          border-radius: 20px;
+                          border: none;
+                          background-color: #007bff;
+                          color: white;
+                          cursor: pointer;
+                          box-shadow: 0 0 10px rgba(0,0,0,0.1); /* Sombreamento */
+                      }
+              
+                      
+                      #protecaoSenha {
+                          background-color: #ffffff;
+                          padding: 40px;
+                          border-radius: 50px;
+                          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+                          display: flex;
+                          align-items: center;
+                          gap: 30px;
+                          backdrop-filter: blur(10px);
+                      }
+              
+                      #protecaoSenha input[type="password"] {
+                        padding: 8px 25px; /* Altura diminuída */
+                        border: 1px solid #ccc;
+                        border-radius: 15px;
+                        width: 200px; /* Largura aumentada */
+                        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+                        outline: none;
+                        transition: border-color 0.3s;
+                        color: #555;
+                        font-size: 18px;
+                    }
+              
+                      #protecaoSenha input[type="password"]::placeholder {
+                          color: #bbb;
+                      }
+              
+                      #protecaoSenha input[type="password"]:focus {
+                          border-color: #007bff;
+                      }
+              
+                      #protecaoSenha button {
+                          font-size: 13px;
+                          padding: 14px 30px;
+                          background-color: #007bff;
+                          color: white;
+                          border: none;
+                          border-radius: 15px;
+                          cursor: pointer;
+                          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                          transition: background-color 0.4s, transform 0.4s;
+                      }
+              
+                      #protecaoSenha button:hover {
+                          background-color: #0056b3;
+                          transform: translateY(-2px);
+                      }
+              
+                      #conteudoProtegido {
+                          display: none;
+                      }
+
+                      #myModal {
+                        display: none;
+                        opacity: 0;
+                        visibility: hidden;
+                        transition: opacity 0.5s linear, visibility 0s linear 0.5s; /* Ajuste para visibilidade após a transição de opacidade */
+                      }
+
+                      #myModal.show {
+                        display: block; 
+                        opacity: 1; 
+                        visibility: visible; 
+                      }
+
+                                a {
+                                    color: #00aff4;
+                                    text-decoration: none;
+                                }
+
+                                a:hover {
+                                    text-decoration: underline;
+                                }
+
+                                img {
+                                    object-fit: contain;
+                                }
+
+                                .markdown {
+                                        max-width: 100%;
+                                        line-height: 1.3;
+                                        overflow-wrap: break-word;
+                                        font-family: Arial, sans-serif;
+                                        font-size: 16px;
+                                        font-weight: normal;
+                                        text-align: left;
+                                        margin: 1px;
+                                        padding: 4px;
+                                        text-decoration: none;
+                                        text-transform: none;
+                                        letter-spacing: normal;
+                                        word-spacing: normal;
+                                        text-shadow: none;
+                                        white-space: normal;
+                                        background-color: transparent;
+                                        border: none;
+                                }
+
+                                .preserve-whitespace {
+                                    white-space: pre-line;
+                                }
+
+
+                                .spoiler-text {
+                                    background-color: rgba(255, 255, 255, 0.1);
+                                    border-radius: 3px;
+                                }
+
+                                .spoiler-text--hidden {
+                                    cursor: pointer;
+                                    background-color: #202225;
+                                    color: rgba(0, 0, 0, 0);
+                                }
+
+                                .spoiler-text--hidden:hover {
+                                    background-color: rgba(32, 34, 37, 0.8);
+                                }
+
+                                .spoiler-text--hidden::selection {
+                                    color: rgba(0, 0, 0, 0);
+                                }
+
+                                .quote {
+                                  border-left: 5px solid #5C5E62;
+                                  color: #DCDDDE;
+                                  padding-left: 8px;
+                                  margin: 0 10px; 
+                                  border-radius: 6px;
+                                  display: block;
+                                  box-sizing: border-box; 
+                                }
+                                
+                                .quote::before {
+                                    color: #7a7a7a;
+                                    font-size: 0.85em;
+                                    content: "ㅤ/quote mensagemㅤ";
+                                    margin-right: 0.5em;
+                                    border: 2px solid #4f545c;
+                                    border-radius: 5px;
+                                 }
+
+                                .pre {
+                                    background-color: #1e1f22;
+                                    font-family: "Consolas", "Courier New", Courier, monospace;
+                                }
+
+                                .pre--multiline {
+                                    margin-top: 0.25em;
+                                    margin-bottom: 0.25em;
+                                    margin-right: 0.06em;
+                                    margin-left: 0.06em;
+                                    margin-bottom: 0.25em;
+                                    padding: 0.5em;
+                                    border: 2px solid #313338;
+                                    border-radius: 10px;
+                                    background-color: #313338;
+                                    color: #bbbbbb;
+                                }
+                                
+                                .pre--multiline.hljs {
+                                    background-color: #1e1f22;
+                                    color: #49bbbe;
+                                }
+
+                                .pre--inline {
+                                    background-color: #2b2d31;
+                                    color: #bbbbbb;
+                                    padding: 1px 5px;  /* Aumentado o valor do padding-left e padding-right */
+                                    border-radius: 6px;
+                                }
+                                
+                                .mention {
+                                    border-radius: 3px;
+                                    padding: 0 2px;
+                                    color: #7289da;
+                                    background-color: rgba(114, 137, 218, .1);
+                                    font-weight: 500;
+                                }
+
+                                .timestamp {
+                                    border-radius: 3px;
+                                    padding: 0 2px;
+                                    background-color: rgba(255, 255, 255, 0.06);
+                                }
+
+                                .emoji {
+                                    width: 1.325em;
+                                    height: 1.325em;
+                                    margin: 0 0.06em;
+                                    vertical-align: -0.4em;
+                                }
+
+                                .emoji--small {
+                                    width: 1em;
+                                    height: 1em;
+                                }
+
+                                .emoji--large {
+                                    width: 2.8em;
+                                    height: 2.8em;
+                                }
+
+                                .preamble {
+                                    display: grid;
+                                    margin: 0 0.3em 0.6em 0.3em;
+                                    max-width: 100%;
+                                    grid-template-columns: auto 1fr;
+                                }
+
+                                .preamble__guild-icon-container {
+                                    grid-column: 1;
+                                }
+
+                                .preamble__guild-icon {
+                                    max-width: 88px;
+                                    max-height: 88px;
+                                }
+
+                                .preamble__entries-container {
+                                    grid-column: 2;
+                                    margin-left: 0.6em;
+                                }
+
+                                .preamble__entry {
+                                    font-size: 1.4em;
+                                    color: #ffffff;
+                                }
+
+                                .preamble__entry--small {
+                                    font-size: 1em;
+                                }
+
+                                .chatlog {
+                                    max-width: 100%;
+                                }
+
+                                .chatlog__message-group {
+                                    display: grid;
+                                    margin: 0 0.6em;
+                                    padding: 0.9em 0;
+                                    border-top: 1px solid rgba(255, 255, 255, 0.1);
+                                    grid-template-columns: auto 1fr;
+                                }
+
+                                .chatlog__reference-symbol {
+                                    grid-column: 1;
+                                    margin: 8px 4px 4px 18px;
+                                    border-left: 2px solid #4f545c;
+                                    border-top: 2px solid #4f545c;
+                                    border-radius: 8px 0 0 0;
+                                }
+
+                                .chatlog__reference-symbol-below {
+                                    grid-column: 1;
+                                    margin: -10px 4px 10px 18px;
+                                    border-left: 2px solid #4f545c;
+                                    border-bottom: 2px solid #4f545c; 
+                                    margin-left: 20px; 
+                                    margin-right: 5px; 
+                                }
+
+                                .chatlog__reference {
+                                    display: flex;
+                                    grid-column: 2;
+                                    margin-bottom: 0.25em;
+                                    font-size: 0.875em;
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    align-items: center;
+                                    color: #b5b6b8;
+                                }
+
+                                .chatlog__reference-avatar {
+                                    border-radius: 50%;
+                                    width: 16px;
+                                    height: 16px;
+                                    margin-right: 0.25em;
+                                }
+
+                                .chatlog__reference-name {
+                                    margin-right: 0.3em;
+                                    font-weight: 600;
+                                    font-size: 15px; 
+
+                                }
+
+                                .chatlog__reference-content {
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                }
+
+                                .chatlog__reference-content a:hover {
+                                    text-decoration: none;
+                                }
+
+                                .chatlog__reference-link {
+                                    cursor: pointer;
+                                    color: #b5b6b8;
+                                }
+
+                                .chatlog__reference-link * {
+                                    display: inline;
+                                    pointer-events: none;
+                                }
+
+                                .chatlog__reference-link:hover {
+                                    color: #ffffff;
+                                }
+
+                                .chatlog__reference-link:hover *:not(.spoiler-text) {
+                                    color: #ffffff;
+                                }
+
+                                .chatlog__reference-edited-timestamp {
+                                    margin-left: 0.25em;
+                                    font-size: 0.8em;
+                                    color: rgba(255, 255, 255, 0.2);
+                                }
+
+                                .chatlog__role {
+                                    margin-left: 0.35em;
+                                    font-size: 1.00em;
+                                    color: rgba(255, 255, 75, 0.35);
+                                }
+
+                                .chatlog__author-avatar-container {
+                                    grid-column: 1;
+                                    width: 40px;
+                                    height: 40px;
+                                    margin-right: 16px;
+                                }
+
+                                .chatlog__author-avatar {
+                                    border-radius: 50%;
+                                    width: 40px;
+                                    height: 40px;
+                                    transition: transform 0.3s ease;
+                                    transform: rotate(10deg);
+                                }
+
+                                .chatlog__author-avatar:hover {
+                                    transform: scale(1.34); 
+                                }
+
+                                .chatlog__messages {
+                                    grid-column: 2;
+                                    min-width: 50%;
+                                }
+
+                                @keyframes softPulse {
+                                    0% { text-shadow: 0 0 1px #ffffff; }
+                                    50% { text-shadow: 0 0 2px #ffffff, 0 0 16px #ffffff; }
+                                    100% { text-shadow: 0 0 1px #ffffff; }
+                                }
+
+                                .chatlog__author-name {
+                                    font-weight: 600;
+                                    color: #ffffff;
+                                    font-size: 14.2px;
+                                    letter-spacing: 0.0px;
+                                    animation: softPulse 3s infinite;
+                                }
+
+                                .chatlog__timestamp {
+                                    margin-left: 0.3em;
+                                    font-size: 0.72em;
+                                    color: rgba(255, 255, 255, 0.2);
+                                }
+
+                                .chatlog__message {
+                                    padding: 0.1em 0.0em;
+                                    margin: 0 -0.6em;
+                                    background-color: transparent;
+                                    transition: background-color 1s ease;
+                                }
+
+                                .chatlog__message--highlighted {
+                                    background-color: rgba(114, 137, 218, 0.2);
+                                }
+
+                                .chatlog__message--pinned {
+                                    background-color: rgba(249, 168, 37, 0.05);
+                                }
+
+                                .chatlog__content {
+                                    font-size: 0.85em;
+                                    word-wrap: break-word;
+                                }
+
+                                .chatlog__edited-timestamp {
+                                    margin-left: 0.15em;
+                                    font-size: 0.8em;
+                                }
+
+                                .chatlog__attachment {
+                                    display: inline-block;
+                                    position: relative;
+                                    margin-top: 0.3em;
+                                    border-radius: 3px;
+                                    overflow: hidden;
+                                }
+
+                                .chatlog__attachment--hidden {
+                                    cursor: pointer;
+                                    box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+                                }
+
+                                .chatlog__attachment--hidden * {
+                                    pointer-events: none;
+                                }
+
+                                .chatlog__attachment-spoiler-caption {
+                                    display: none;
+                                    z-index: 999;
+                                    position: absolute;
+                                    left: 50%;
+                                    top: 50%;
+                                    transform: translate(-50%, -50%);
+                                    padding: 0.4em 0.8em;
+                                    background-color: rgba(0, 0, 0, 0.9);
+                                    border-radius: 20px;
+                                    color: #dcddde;
+                                    font-size: 0.9em;
+                                    font-weight: 600;
+                                    letter-spacing: 0.05em;
+                                }
+
+                                .chatlog__attachment--hidden .chatlog__attachment-spoiler-caption {
+                                    display: block;
+                                }
+
+                                .chatlog__attachment--hidden:hover .chatlog__attachment-spoiler-caption {
+                                    color: #fff;
+                                }
+
+                                .chatlog__attachment-media {
+                                    vertical-align: top;
+                                    max-width: 45vw;
+                                    max-height: 500px;
+                                    border-radius: 3px;
+                                }
+
+                                .chatlog__attachment--hidden .chatlog__attachment-media {
+                                    filter: blur(44px);
+                                }
+
+                                .chatlog__attachment-generic {
+                                    width: 100%;
+                                    max-width: 520px;
+                                    height: 40px;
+                                    padding: 10px;
+                                    background-color: #2f3136;
+                                    border: 1px solid #292b2f;
+                                    border-radius: 3px;
+                                    overflow: hidden;
+                                }
+
+                                .chatlog__attachment--hidden .chatlog__attachment-generic {
+                                    filter: blur(44px);
+                                }
+
+                                .chatlog__attachment-generic-icon {
+                                    float: left;
+                                    width: 30px;
+                                    height: 100%;
+                                    margin-right: 10px;
+                                }
+
+                                .chatlog__attachment-generic-size {
+                                    color: #72767d;
+                                    font-size: 12px;
+                                }
+
+                                .chatlog__attachment-generic-name {
+                                    overflow: hidden;
+                                    white-space: nowrap;
+                                    text-overflow: ellipsis;
+                                }
+
+                                .chatlog__edited-timestamp {
+                                    color: rgba(255, 255, 255, 0.2);
+                                }
+
+                                .chatlog__embed {
+                                    display: flex;
+                                    margin-top: 0.3em;
+                                    max-width: 520px;
+                                    border-radius: 5px; 
+                                }
+
+
+                                .chatlog__embed-thumbnail img {
+                                    max-width: 80px; 
+                                    float: left;
+                                    margin-right: 10px;
+                                    border-radius: 5px; 
+                                }
+
+                                .chatlog__embed-color-pill {
+                                    flex-shrink: 0;
+                                    width: 0.25em;
+                                    border-top-left-radius: 3px;
+                                    border-bottom-left-radius: 3px;
+                                }
+
+                                .chatlog__embed-color-pill--default {
+                                    background-color: #202225;
+                                }
+
+                                .chatlog__embed-content-container {
+                                    background-color: #2b2d31;
+                                    padding: 5px;
+                                    border: 1px solid #4A4D52;
+                                    border-radius: 5px;
+                                }
+                                
+
+                                .chatlog__embed-content {
+                                    display: flex;
+                                    width: 100%;
+                                }
+
+                                .chatlog__embed-text {
+                                    flex: 1;
+                                }
+
+                                .adjusted-title {
+                                    padding-left: 10px;
+                                }
+                                
+                                .chatlog__embed-author {
+                                    display: flex;
+                                    margin-bottom: 0.3em;
+                                    align-items: center;
+                                }
+
+                                .chatlog__embed-author-icon {
+                                    margin-right: 0.5em;
+                                    width: 20px;
+                                    height: 20px;
+                                    border-radius: 50%;
+                                }
+
+                                .chatlog__embed-author-name {
+                                    font-size: 0.875em;
+                                    font-weight: 600;
+                                    color: #ffffff
+                                }
+
+                                .chatlog__embed-author-name-link {
+                                    color: #ffffff;
+                                }
+
+                                .chatlog__embed-title {
+                                    margin-bottom: 0.2em;
+                                    font-size: 0.875em;
+                                    font-weight: 600;
+                                    color: #ffffff;
+                                    padding-left: 10px;
+                                }
+
+                                .chatlog__embed-title a {
+                                    color: #89CFF0;
+                                    text-decoration: none;
+                                    font-weight: bold;
+                                }
+
+                                .chatlog__embed-title a:hover {
+                                    text-decoration: underline;
+                                }
+
+                                .chatlog__embed-description {
+                                    font-weight: 500;
+                                    font-size: 0.85em;
+                                    color: #dcddde;
+                                    padding-left: 10px;
+                                }
+
+                                .chatlog__embed-fields {
+                                    display: flex;
+                                    flex-wrap: wrap;
+                                    gap: 0 0.5em;
+                                }
+
+                                .chatlog__embed-field {
+                                    flex: 0;
+                                    min-width: 100%;
+                                    max-width: 506px;
+                                    padding-top: 0.6em;
+                                    font-size: 0.875em;
+                                }
+
+                                .chatlog__embed-field--inline {
+                                    flex: 1;
+                                    flex-basis: auto;
+                                    min-width: 150px;
+                                }
+
+                                .chatlog__embed-field-name {
+                                    margin-bottom: 0.2em;
+                                    font-weight: 600;
+                                    color: #ffffff;
+                                }
+
+                                .chatlog__embed-field-value {
+                                    font-weight: 500;
+                                    color: #dcddde;
+                                }
+
+                                .chatlog__embed-thumbnail {
+                                    flex: 0;
+                                    margin-left: 0.1em;
+                                    max-width: 80px;
+                                    max-height: 80px;
+                                    border-radius: 3px;
+                                }
+
+                                .chatlog__embed-image-container {
+                                    margin-top: 0.6em;
+                                }
+
+                                .chatlog__embed-image {
+                                    max-width: 500px;
+                                    max-height: 400px;
+                                    border-radius: 3px;
+                                }
+
+                                .chatlog__embed-footer {
+                                    margin-top: 0.6em;
+                                    color: #dcddde;
+                                }
+
+                                .chatlog__embed-footer-icon {
+                                    margin-right: 0.2em;
+                                    width: 20px;
+                                    height: 20px;
+                                    border-radius: 50%;
+                                    vertical-align: middle;
+                                }
+
+                                .chatlog__embed-footer-text {
+                                    vertical-align: middle;
+                                    font-size: 0.75em;
+                                    font-weight: 500;
+                                }
+
+                                .chatlog__embed-plainimage {
+                                    vertical-align: top;
+                                    max-width: 45vw;
+                                    max-height: 500px;
+                                    border-radius: 3px;
+                                }
+
+                                .chatlog__embed-spotify {
+                                    border: 0;
+                                }
+
+                                .chatlog__embed-youtube-container {
+                                    margin-top: 0.6em;
+                                }
+
+                                .chatlog__embed-youtube {
+                                    border: 0;
+                                    border-radius: 3px;
+                                }
+
+                                .chatlog__reactions {
+                                    display: flex;
+                                }
+
+                                .chatlog__reaction {
+                                    display: flex;
+                                    align-items: center;
+                                    margin: 0.35em 0.1em 0.1em 0.1em;
+                                    padding: 0.2em 0.35em;
+                                    background-color: rgba(255, 255, 255, 0.05);
+                                    border-radius: 3px;
+                                }
+
+                                .chatlog__reaction-count {
+                                    min-width: 9px;
+                                    margin-left: 0.35em;
+                                    font-size: 0.875em;
+                                    color: rgba(255, 255, 255, 0.3);
+                                }
+
+                                .chatlog__bot-tag {
+                                    position: relative;
+                                    top: -.1em;
+                                    margin-left: 0.3em;
+                                    padding: 0.05em 0.3em;
+                                    border-radius: 3px;
+                                    line-height: 1.3;
+                                    background-color: #5865F2;
+                                    color: #ffffff;
+                                    font-size: 0.625em;
+                                    font-weight: 500;
+                                }
+
+                                .postamble {
+                                    margin: 1.4em 0.3em 0.6em 0.3em;
+                                    padding: 1em;
+                                    border-top: 1px solid rgba(255, 255, 255, 0.1);
+                                }
+
+                                .postamble__entry {
+                                    color: #ffffff;
+                                }
+
+                                @keyframes rainbow {
+                                    0% {border-top-color: #f06;}
+                                    14% {border-top-color: #f80;}
+                                    28% {border-top-color: #ff0;}
+                                    42% {border-top-color: #8f0;}
+                                    57% {border-top-color: #09f;}
+                                    71% {border-top-color: #607;}
+                                    85% {border-top-color: #f09;}
+                                    100% {border-top-color: #f06;}
+                                }
+                                
+                                .hr {
+                                    border: none; 
+                                    border-top: 2px solid #399; 
+                                    width: 50%;
+                                    margin: 15px auto; 
+                                    animation: rainbow 10s linear infinite; /* Efeito rainbow com 10 segundos de duração */
+                                }
+                        
+
+                                .header {
+                                    background-color: #f1f1f1;
+                                    padding: 10px;
+                                    text-align: center;
+                                    border-bottom: 2px solid #ddd;
+                                    margin-bottom: 20px;
+                                    font-size: 1.5rem;
+                                    transition: background-color 0.4s ease;
+                                }
+                                
+                               
+                                
+                                .header img {
+                                    border-radius: 50%;
+                                    box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.3);
+                                    transform: rotate(0deg) scale(1.30);
+                                    transition: transform 2s, box-shadow 2s;
+                                }
+                                
+                                @keyframes neonSnake {
+                                    0% {
+                                        background-position: 200% 0;
+                                    }
+                                    100% {
+                                        background-position: -100% 0;
+                                    }
+                                }
+
+                                .guild-name {
+                                    font-size: 1.5rem; 
+                                    color: transparent;
+                                    font-weight: bold; 
+                                    margin-top: 10px;
+                                    opacity: 1.0;
+                                    transition: opacity 2s ease-in-out;
+
+                                    /* Gradiente com cores mais intensas e vibrantes */
+                                    background: linear-gradient(90deg, 
+                                        rgba(255,0,0,1), 
+                                        rgba(255,165,0,1), 
+                                        rgba(255,255,0,1), 
+                                        rgba(152,251,152,1), 
+                                        rgba(0,128,0,1), 
+                                        rgba(32,178,170,1), 
+                                        rgba(0,0,255,1), 
+                                        rgba(75,0,130,1), 
+                                        rgba(143,0,255,1), 
+                                        rgba(238,130,238,1),
+                                        rgba(255,0,0,1));
+                                    background-size: 300% auto; 
+                                    animation: neonSnake 20s infinite;
+
+                                    -webkit-background-clip: text;
+                                    background-clip: text;
+
+                                    text-shadow: 0 0 5px rgba(173,216,230,0.6);
+
+                                }
+
+                                
+                                
+                                .header img:hover {
+                                    transform: rotate(360deg) scale(1.50);
+                                    animation: rainbowRotate 24s infinite;
+                                
+                                }
+                                
+                                .header img:hover + .guild-name {
+                                    opacity: 1; 
+                                }
+                                
+                                .header:hover {
+                                    background-color: #e9e9e9;
+                                }
+                                
+
+                                @keyframes rainbowSlide {
+                                    0% {background-position: 100% 0%, 100% 100%;}
+                                    100% {background-position: 0% 0%, 0% 100%;}
+                                }
+                                
+                                .channel-name {
+                                    font-weight: bold;
+                                    color: #333333;
+                                    font-size: 2.4rem;
+                                    background-image: 
+                                        linear-gradient(to right, 
+                                            #FFA07A, #FFEC8B, #98FB98, #87CEFA, #DDA0DD, #FFB6C1, #FFDAB9, #C1FFC1, #B0E0E6, #FFA07A
+                                        ), 
+                                        linear-gradient(to right, 
+                                            #FFA07A, #FFEC8B, #98FB98, #87CEFA, #DDA0DD, #FFB6C1, #FFDAB9, #C1FFC1, #B0E0E6, #FFA07A
+                                        );
+                                    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.5); /* Efeito de brilho */
+                                  background-size: 200% 3px;
+                                    padding: 12px 0 12px 0; /* Aumentar o padding inferior */
+                                    background-repeat: no-repeat;
+                                    background-position: 100% 0%, 100% 100%; /* Definido para a parte superior e inferior */
+                                    animation: rainbowSlide 6s linear infinite; 
+                                    cursor: pointer;
+                                }
+                                
+                            
+                                .chatlog__date {
+                                    font-size: 0.8rem; 
+                                    display: block; 
+                                    text-align: right;
+                                    margin-top: -10px; 
+                                }
+
+                                .discord-button {
+                                    background-color: blue; /* Cor padrão */
+                                    color: white;
+                                    border: none;
+                                    padding: 10px 20px;
+                                    margin-top: 10px;
+                                    border-radius: 5px;
+                                    cursor: pointer;
+                                    transition: background-color 0.3s, transform 0.1s; /* Adiciona uma transição ao background-color e ao transform */
+                                }
+                            
+                                .discord-button:hover {
+                                    background-color: lightblue; /* Cor quando o mouse está sobre o botão */
+                                }
+                            
+                                .discord-button:active {
+                                    transform: scale(0.95); /* Reduz o tamanho do botão quando é clicado */
+                                }
+
+                                .video-player {
+                                    position: relative;
+                                    width: 320px;
+                                    height: 240px;
+                                }
+                            
+                                .controls {
+                                    position: absolute;
+                                    bottom: 0;
+                                    width: 100%;
+                                    background-color: rgba(0, 0, 0, 0.5);
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    gap: 10px;
+                                }
+                            
+                                button {
+                                    background-color: white;
+                                    border: none;
+                                    padding: 4px 8px; /* Ajuste o padding aqui para alterar o tamanho do botão */
+                                    cursor: pointer;
+                                    font-size: 12px; /* Ajuste o tamanho da fonte aqui */
+                                }
+                                
+                                .thumbnail {
+                                    width: auto;
+                                    max-width: 128px; 
+                                    max-height: 256px;
+                                    border-radius: 5px;
+                                    padding: 4px;
+                                    opacity: 0.4;
+                                    transition: box-shadow 0.50s ease, opacity 0.65s ease; 
+                                }
+                                
+                                .thumbnail:hover {
+                                    box-shadow: 0px 0px 20px 0px rgba(255, 255, 255, 0.4);
+                                    opacity: 1;
+                                    cursor: pointer; /* Adiciona esta linha */
+                                }
+
+                                @keyframes pulse {
+                                    0%, 100% { 
+                                        box-shadow: 0 0 5px #FFF;
+                                    }
+                                    50% { 
+                                        box-shadow: 0 0 12px #FFF, 0 0 26px #FFF; 
+                                    }
+                                }
+                                
+                                @keyframes fadeOutPulse {
+                                    from {
+                                        box-shadow: 0 0 5px #FFF;
+                                    }
+                                    to {
+                                        box-shadow: 0 0 0px transparent;
+                                    }
+                                }
+                                
+                                .shadow-container {
+                                    display: inline-block;
+                                    border-radius: 20px;
+                                    overflow: hidden;
+                                }
+                                
+                                .focused-message {
+                                    animation: pulse 1.5s infinite; 
+                                    border-radius: 10px;  
+                                
+                                }
+                                
+                                .fade-out {
+                                    animation: fadeOutPulse 3s forwards;
+                                    border-radius: 10px;  
+                                
+                                }
+
+                                .error-text {
+                                    color: #fff;
+                                    display: inline-block;
+                                }
+                                
+                                .error-text span {
+                                    position: relative;
+                                    display: inline-block;
+                                    animation: glitchChar 1s infinite alternate;
+                                }
+                                
+                                @keyframes glitchChar {
+                                    0%, 100% { transform: translateY(0); }
+                                    33% { transform: translateY(-1px); }
+                                    66% { transform: translateY(1px); }
+                                }
+                                
+                                .error-text span:nth-child(odd) {
+                                    animation-delay: 0.2s;
+                                }
+                                
+                                .error-text span:nth-child(4n) {
+                                    animation-delay: 0.4s;
+                                }
+                                
+                                .error-text span:nth-child(5n) {
+                                    animation-delay: 0.6s;
+                                }
+                                .tooltip {
+                                  position: relative;
+                                  display: inline-block;
+                                }
+                                
+                                .tooltipIcon {
+                                  background-color: #555;
+                                  color: #fff;
+                                  text-align: center;
+                                  border-radius: 50%;
+                                  width: 25px;
+                                  height: 25px;
+                                  display: inline-block;
+                                  line-height: 25px;
+                                  cursor: help;
+                                }
+                                
+                                .tooltipText {
+                                  visibility: hidden;
+                                  width: 220px;
+                                  background-color: #555;
+                                  color: #fff;
+                                  text-align: center;
+                                  border-radius: 6px;
+                                  padding: 20px 20;
+                                  position: absolute;
+                                  z-index: 1;
+                                  bottom: 125%;
+                                  left: 50%;
+                                  margin-left: -110px; /* Use metade da largura do tooltipText */
+                                  opacity: 0;
+                                  transition: opacity 0.3s;
+                                }
+                                
+                                .tooltip:hover .tooltipText {
+                                  visibility: visible;
+                                  opacity: 1;
+                                }
+
+                                .modal {
+                                  display: none; /* Escondido por padrão */
+                                  position: fixed; /* Fica em posição fixa */
+                                  z-index: 1; /* Fica no topo */
+                                  padding-top: 100px; /* Localização do box */
+                                  left: 0;
+                                  top: 0;
+                                  width: 100%; /* Largura total */
+                                  height: 100%; /* Altura total */
+                                  overflow: auto; /* Habilita scroll se necessário */
+                                  background-color: rgb(0,0,0); /* Fallback color */
+                                  background-color: rgba(0,0,0,0.9); /* Cor do background com opacidade */
+                                }
+
+                                /* Estilo da Imagem Modal */
+                                .modal-content {
+                                  margin: auto;
+                                  display: block;
+                                  width: 80%;
+                                  max-width: 700px;
+                                }
+
+                                /* Caption da Imagem */
+                                #caption {
+                                  margin: auto;
+                                  display: block;
+                                  width: 80%;
+                                  max-width: 700px;
+                                  text-align: center;
+                                  color: #ccc;
+                                  padding: 10px 0;
+                                  height: 150px;
+                                }
+
+                                /* Botão de Fechar (x) */
+                                .close {
+                                  position: absolute;
+                                  top: 15px;
+                                  right: 35px;
+                                  color: #f1f1f1;
+                                  font-size: 40px;
+                                  font-weight: bold;
+                                  transition: 0.3s;
+                                }
+
+                                .close:hover,
+                                .close:focus {
+                                  color: #bbb;
+                                  text-decoration: none;
+                                  cursor: pointer;
+                                }
+                                
+                        </style>
+                        </head>
+                        <body>
+                              <div id="protecaoSenha">
+                              <div class="tooltip">
+                              <span class="tooltipIcon" onmouseover="mostrarTooltip()" onclick="mostrarTooltip()">?</span>
+                              <span class="tooltipText" id="tooltipText">
+                              Para acessar o transcript, utilize a chave fornecida via mensagem direta (DM). Se encontrar dificuldades, entre na call de suporte.</span>
+                              </div>
+                              <input type="password" id="senha" placeholder="Digite a chave">
+                              <div id="mensagemErro" class="mensagemErro">Contate o suporte</div> <!-- Mensagem logo após o campo de senha -->
+                              <button onclick="verificarSenha()">Entrar</button>
+                              </div>
+
+                              <div id="myModal" class="modal">
+                                <span class="close">&times;</span>
+                                <img class="modal-content" id="img01">
+                                <div id="caption"></div>
+                              </div>
+
+                              <script>
+
+                              var encoded = "Y3B4cmo=";
+
+                              // Função para abrir o modal
+                              function openModal(src, alt) {
+                                var modal = document.getElementById('myModal');
+                                modal.style.display = "block"; // Exibe o modal
+                                modal.style.opacity = 1; // Define a opacidade para 1
+                                modal.style.visibility = "visible"; // Torna o modal visível
+                                document.getElementById('img01').src = src;
+                                document.getElementById('caption').innerHTML = alt;
+                              }
+                              
+                              // Fechar o modal com o "X"
+                              var span = document.getElementsByClassName("close")[0];
+                              span.onclick = function() {
+                                var modal = document.getElementById('myModal');
+                                modal.style.opacity = 0; // Inicia a transição para ficar transparente
+                                modal.style.visibility = "hidden"; // Torna o modal invisível após a transição
+                                setTimeout(function() {
+                                  modal.style.display = "none"; // Esconde o modal após a transição
+                                }, 500); // Ajuste o tempo de acordo com a duração da sua transição
+                              }
+                              
+                              // Fechar o modal clicando fora dele
+                              window.onclick = function(event) {
+                                var modal = document.getElementById('myModal');
+                                if (event.target == modal) {
+                                  modal.style.opacity = 0;
+                                  modal.style.visibility = "hidden";
+                                  setTimeout(function() {
+                                    modal.style.display = "none";
+                                  }, 500);
+                                }
+                              }
+                              
+                              // Fechar o modal com a tecla ESC
+                              document.onkeydown = function(event) {
+                                var modal = document.getElementById('myModal');
+                                if (event.keyCode == 27) { // Código da tecla ESC
+                                  modal.style.opacity = 0;
+                                  modal.style.visibility = "hidden";
+                                  setTimeout(function() {
+                                    modal.style.display = "none";
+                                  }, 500);
+                                }
+                              }                              
+
+                              function aplicarEstiloAposLogin() {
+                                // Aplica o estilo padrão ao body
+                                document.body.style.fontFamily = '"Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif';
+                                document.body.style.backgroundColor = "#36393e";
+                                document.body.style.color = "#dcddde";
+                                document.body.style.fontSize = "17px";
+                                document.body.style.fontWeight = "400";
+                                document.body.style.display = "block";
+                                document.body.style.alignItems = "normal";
+                                document.body.style.justifyContent = "normal";
+                                document.body.style.height = "auto"; // Ajuste conforme necessário para a página de transcript
+                                document.body.style.background = "none";
+                                document.body.style.margin = "0"; // Mantém a margem zerada
+                                document.body.style.padding = "0"; // Mantém o padding zerado
+                                // Remove o gradiente de fundo, se aplicado anteriormente
+                                document.body.style.background = "#36393e"; // Define o fundo para a cor sólida padrão
+                              }
+
+                              var tentativas = 0;
+
+                              function verificarSenha() {
+
+                              var decoded = atob(encoded);
+
+                              var senha = document.getElementById("senha").value;
+
+                              tentativas++;
+
+                              if (senha == decoded) { 
+                                  document.getElementById("conteudoProtegido").style.display = "block";
+                                  document.getElementById("protecaoSenha").style.display = "none";
+                                  aplicarEstiloAposLogin();
+                              } else if (tentativas > 3) {
+                                  document.getElementById("mensagemErro").style.display = "block";
+                              } else {
+                                  alert("A senha está incorreta!");
+                              }
+                              }
+
+                              </script>
+
+                              <div id="conteudoProtegido" style="display: none;">
+
+                            <div class="header"><br>
+                                <img src="data:image/webp;base64,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" alt="Logo do 💎 ComplexoRJ - Season6" width="128" /> 
+                                <br><br><div class="guild-name"><strong>💎 ComplexoRJ - Season6</strong></div>
+                            </div>
+                            <div class="header channel-name"><strong>revisão-76761</strong></div>
+                            <script>
+                                function scrollToMessage(event, messageId) {
+                                    event.preventDefault();
+
+                                    const targetMessage = document.getElementById("message-" + messageId);
+                                    if (targetMessage) {
+                                        targetMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                                        targetMessage.classList.add('focused-message');
+
+                                        setTimeout(() => {
+                                            targetMessage.classList.remove('focused-message');
+                                            targetMessage.classList.add('fade-out');
+                                            
+                                            setTimeout(() => {
+                                                targetMessage.classList.remove('fade-out');
+                                            }, 3000);
+                                        }, 3000);
+                                    }
+                                }
+                            </script>
+                        </body>
+                        
+                        <div class="chatlog">
+                            <div class="chatlog__message-group">
+                                <div class="chatlog__author-avatar-container">
+                                    <img class="chatlog__author-avatar" src="data:image/webp;base64,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" alt="Complexo RJ">
+                                </div>
+                                <div class="chatlog__messages">
+                                <span class="chatlog__author-name" data-user-id="1110249022591074476">[BOT] Complexo RJ - :</span>
+                                <span class="chatlog__timestamp">(09/03/2024, 21:34:22)</span>
+                                    <div class="chatlog__message" data-message-id="1216182328041275464" id="message-1216182328041275464" title="Mensagem enviada: 3/9/2024, 9:34:22 PM">
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown preserve-whitespace"><@427497529148440578> </div>
+                                        </div>
+                                <div class="chatlog__embed">
+                                    <div class="chatlog__embed-color-pill" style="background-color: rgb(255, 113, 0);"></div>
+                                    <div class="chatlog__embed-content-container">
+                                        <div class="chatlog__embed-content">
+                                            
+                                            <div class="chatlog__embed-text">
+                                                
+                                                <div class="chatlog__embed-description">
+                                                    <div class="markdown preserve-whitespace">Bem-vindo(a), para que a equipe <strong>STAFF</strong> resolva o seu caso de forma rápida e prática, preencha o formulário abaixo:<br><div class="quote"><br><strong>Meu ID:</strong><br><strong>Data da Punição:</strong><br><strong>Motivo:</strong><br><strong>Por que deseja que seu caso seja reavaliado:</strong><br><strong>Provas:</strong><br></div>                                              <div class="chatlog<u>embed-content-container"><div class="chatlog</u>embed-content"><div class="chatlog__embed-text"><div class="pre pre--multiline nohighlight">Caso tenha alguma contra prova, é necessário apresentar para que sua punição seja analisada, é obrigatório que faça upload do vídeo no YouTube, Medal, Clipchamp ou qualquer outra plataforma onde o vídeo fique disponível, informamos que provas com TELA DE MORTE, em sua maioria podem ser negadas ou invalidadas.</div></div></div></div></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chatlog">
+                            <div class="chatlog__message-group">
+                                <div class="chatlog__author-avatar-container">
+                                    <img class="chatlog__author-avatar" src="data:image/webp;base64,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" alt="Complexo RJ">
+                                </div>
+                                <div class="chatlog__messages">
+                                <span class="chatlog__author-name" data-user-id="1110249022591074476">[BOT] Complexo RJ - :</span>
+                                <span class="chatlog__timestamp">(09/03/2024, 21:34:23)</span>
+                                    <div class="chatlog__message" data-message-id="1216182331367493682" id="message-1216182331367493682" title="Mensagem enviada: 3/9/2024, 9:34:23 PM">
+                                        <div class="chatlog__embed-description">
+                                            
+                                        </div>
+                                <div class="chatlog__embed">
+                                    <div class="chatlog__embed-color-pill" style="background-color: rgb(255, 0, 0);"></div>
+                                    <div class="chatlog__embed-content-container">
+                                        <div class="chatlog__embed-content">
+                                            
+                                            <div class="chatlog__embed-text">
+                                                
+                                                <div class="chatlog__embed-title">
+                                                    <a href="#" target="_blank">❌ Punição Inexistente:</a>
+                                                </div>
+                                                <div class="chatlog__embed-description">
+                                                    <div class="markdown preserve-whitespace"><img src="https://cdn.discordapp.com/emojis/1156032672611708979.png?size=96&quality=lossless" alt="setadupla" class="emoji"> <@427497529148440578>, não encontrei nenhuma punição em <a href="https://discord.com/channels/811632529656381480/1141138474720829440" style="color: #5F9CC2">#📛│resultado-denúncia</a>, se seu banimento foi <strong>SEM MOTIVO</strong> ou por <strong>ANTI-FLOOD</strong>, acesse nosso suporte <strong>24/7</strong> em <a href="https://discord.com/channels/811632529656381480/811632531405013058" style="color: #5F9CC2">#「⌚」Dúvidas | Espera</a> e converse com a nossa <strong>STAFF</strong>.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chatlog">
+                            <div class="chatlog__message-group">
+                                <div class="chatlog__author-avatar-container">
+                                    <img class="chatlog__author-avatar" src="data:image/webp;base64,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" alt="henridrex">
+                                </div>
+                                <div class="chatlog__messages">
+                                <span class="chatlog__author-name" data-user-id="427497529148440578">henridrex :</span>
+                                <span class="chatlog__timestamp">(09/03/2024, 21:34:32)</span>
+                                    <div class="chatlog__message" data-message-id="1216182368113655879" id="message-1216182368113655879" title="Mensagem enviada: 3/9/2024, 9:34:32 PM">
+                                        <div class="chatlog__embed-description">
+                                            <img class="thumbnail" src="data:image/png;base64,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" alt="Anexo 1" style="width:100%;max-width:300px" onclick="openModal(this.src, 'Anexo 1')">
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chatlog">
+                            <div class="chatlog__message-group">
+                                <div class="chatlog__author-avatar-container">
+                                    <img class="chatlog__author-avatar" src="data:image/webp;base64,UklGRjQLAABXRUJQVlA4ICgLAABwNACdASqAAIAAPm0ylEckIyIhKBQMUIANiWgAyQgdCx/DecNZ38HxFdb+Yb0N8wHbI8w/9Yumd5ifNu9In959Qr+pdTh6AHlyezv+6FtPNiv1WwPOWhkeT8L/5XXbNDbzdn4IG9So1onHQLx8cuqC894EGmKNJxSRnmYKw7yvqtJ2ng5X4Spopm0ZdDk1Tj4WdQSLKPy6ngGRr+kQGHPJJM8qKoYuC+TNVOLuHDTEyZqFfyRmtxSzo8icj8IuHX9DG/xqxs7fDoZ1lxNf98Pz5gUUZLAX9vU6B1+hef64jgBTXUgQcCPdoO+YbzKstzqmlo6OtUFJelRJsP4hgnD+h3AY96shp2EK7qVFQ9VcqYJPvSlyicwdlPZ9d2y3xh2O6zvbzxjguROhkyvKqVKWo7WSa2n+6anDQjsvvSYuYHVxf8yTl3WvapLZAsxLK5sbOEQmKZAjMDU2q5WZPdzEh8iNXQHCaS1+dyYJiHYkIVzZPwwTfhqsQ+ER69I+7CdF3XBd2v1OjcQv6CGAl0c31Wed7dWSYu4pDqF2BQhyqQFBaKs5n5+69xfHIAD++yuhORWyxaav1oZuZZc4jcNNwTbxChFC7yKXZuxOaPSfq4aUZff1dpb7qGeXgaHWSpvAmlCA1ufx4kr4y7FwZ+0KTFQGmjJ6z5cDsMwXidAG4/3ybbPLbPF/4100xY78wvm+polMUybZx0iv5Q/g8ZkHybez9xyPVxqDbAernZg7Bgge2IwzI7JGznCFvIhnSAH/YRN/VP2BCBCdEnrcfzKwA3NZhZsTjv4Sx1J+51r/tHM3oca6uvniadMB2KUeALD7o2TEqh8ywBJg/6uWemSJ+V2MHuDHb6fOSrwPdl9OuXGnsTDjZDkcIQ+aHnsY/iRyT0jEmC7GXZWOZ+IQ4ILt/Blxx+KNn7UqizSzNIGXfDAFbloOu/kG8oBID5cUF/3Dx7SVb0owx5SHRHbup10vHza/xg73+uO6FAon4VAzkUKw7xE0bSfm2OXxhoy6fAQ4UEY3GZwjN7odCMmCcbY3ShwB3CVe5l3Q911WAi7aV7QcM6Xqdskn00y3zgfe4dwBl+SqyaDIOdojJxLezV58UXjZGzQ0KIGlgnkiCT7n5PcNqtz4B09p7c+yxy5OMb82ttaQXldz3/1qm17zVZyGt2Jz8PhHzecqzDhH8KKWWYh1c3Ogj8F39kVnay8p9Tegomhbgp5DTMQJ9JvArjtc2NFx+PomI8Dzo1VA3UUNaYBgY+4hgiVL8AQsg/oIn/oD0JCBTeixaQSLOcmm3aAIsDxp7WSFJqZ7fj6XHgMrRA641gi7eLAOoK5mjDAsXFsjNs4sroFe/xHDwMjrdWqdXMAEPXQHusDPsUK9tEP61PwN8phf9UJDLvrNVe5ZS/8wpRys8/amYu3jKQAaCzisgVCv5LLQV/shxJgnBQzehEHWf5IyuzeSxUpRPZXYakFzgza3duRf4Vxn0xrgBQScM+z1lu/3xB2KL/GQhZ92QPM2DWGzxLn1+kdC5+xxNTzxAToDTZRr1dVzgu/k1BV4dkHiCeTOfPDw3UIEvysyxT9FqxawNlTNHcJQH23tbOV+/VIW1W20eAqxlNwlnNs6bPv1lco4tULslHhztGWi+X7BJbQrd0BVvuw2hAPdPRBCiImANNaL/9KwZPuJdLaLZImLbXh9ynu81UYRH0GWafLwXQVwkhspeHjdIHtRNvwvY0WAtsaC37jnuERdS2ZdhozlwA97iTOeP0qupsOWqGdZTXWZKSKrcmRnklVeQj3n+fPCbt3WZupQ3FLGKg/SOlsx0nEN9lIwProP0KZ7ln+eFcKU+saoHC2uN3r+06G3EMQkVc2q40acRfoBZ7yDmURJ+uOqE4jB+BKLcg8wf+Hc7M0MhKz6/68SFpMULap7C9OlIpp/LwXiVhVjPz26/53g9YEECpLSKMfN4oKYg8HPZzPv4/Sy/Lo1rlnO7iX2c4mgJQQ1kRcNXdrad1PmqJNi1tnR0+orNGP/Sm/kPRwXCO2vieBCDQnkTlofNeSNeZWaseed0fi/1gb4+IFhcrBDofx46DzKEXc8yoXTWNkn85smklIJRi63OedTlwY2l/CvHKu0EasUy0kP9vlw7TFxVGwDIZVzWxe5bD3zB8vcyFx0hlZJUkqMV2ouzmv9EEP2dexSwNhJUa/t/u5OliOa+2hcf3bAa0xThRidTsVt7FGIBDJwkoYeEXHNCEN+zokwMy/NGmFlRRdpXU/sVUc0nY84pH07+iwXAUWVCCEtTx+4NA1unCmyUUPm3eyzCEZyt0mgViIYvVkXFBcDMGpPkrtOMr4rsHo5TS99W7bioZETw+RyLqgtgh3VzcuVXDlLaMv8QlQBKZMSOotZq4pZ/gLVWkU2Ty2z9Z2EbqtJxMMhAv5QOS79r3lLr4WDXy9FqdEVBc3F0HvRJqtM6Vb1Xh4qz+h5lUkPQFmz+HdgDs4mA1/4M8CJBih+F8GFwl2OOnNuC4YwNdafTyjeZafF+RFW2zO3CeXc4bvooAE4YnqcevMe+s5VVLHRkbC6O1n8hfKcqHiGpzQrYlmF3K7z4HSzi9JOHbqbQl7UvYh8rQkGC5IPPZlaDxLQd41ItYI4cRNKnaVc34JpSaQhPJRJSEdrBFaEpKJzTEDNLZW3QcxHFuV4u3/TBGS0v3rRGjUioG56/I1YSu6gq1PErVVyXZ5co0qkEatp6qGetFeiJ8UpVPcFQoclN2hihUonOfFevhJ7ShDnmIyP0bIdMHtrY5r6o4YIdVMKDIf3ZezEBttxQlvzHdss7VCPDPKRCdV7iCFhyOwmzqr5jnx0iMc/mn66h/1ih/8GhwJ11eaINteeemTu9ii+bgF/StX9AWCug6zz8uw3tTpM/XDOUJ378mW5L1iDS3iUqbK5WS/IKOmxoaRr2VcP9HbiusmocR/UwS4m1va9o0WaIo48R8HFOLysNovg94qeo5YvYBCAe122dajYtCYS1jlWjTufeDXBz3WnBqlkFi0w119RvO9PJkLM6d5l2nzrQ+s9uhiqZb9NTKGasnksa0pvxQmGcMHQTyh7mH7gSZZunRcbnAioeHnIQ//gcavzResizVTnH8L7vuSmmJmVt4ddOW8tNc5kcC4v30qJDINmfbKxYXmz2vatLe40ZfeIH94je3CGVwlFQRjySfovguC8yoa4lSHJ5O0UO0BvgVpSrAAwM8oaLSosr0Wh6ig2WH/4XpBoq4wzyg6GQk3M5DrFaldxKRrE/55kVOFrKgJBuHAzofJJV5riRppZVlcZTV70OWZ5HovK9f00F2nrvDpdz+fgWX2lMqUzPiMpHDZ5AFhGPYUx3qnIlrmgxA8WsoBgesmWgtVwczbblx3ZoT9VwyK5m7nFsF7nLDeskFXsujdr2JREGtQ1HiDdxZS3Kb3a1UOpWu6ynYn+9gONKK1l8LYZOyc3RkZ13rHqhLRnHn4qgyDyy5Q6StacJfGHd2mLJ577m116zbj1VhwwspRY872IxerVazU06jlfNORu8iCtS76AkNndPVVORiRrZakseD/cZxUyS1j0vfWQZCHUqNqnJ+EzwIfRu1lGfCzZcny4eLJQv8CA+2iYEuuG+IUD5Hx81eXtpYjvWXGniXjoC6b0Y2LcPKXtRK4luiZ3EYp9FOrJfQ8fRujhhxQauhpFEkjZt0J67UW2AJBrclKjWOWXkljtNlCKJPbawIvpImj/Mg1diU4JxBMJ3wC5YJVKFQDD90clnnlNnOBmHQ3A5qaiXUxHm/EPqzTmhsLhX3imcgQgMIg5YAA=" alt="henridrex">
+                                </div>
+                                <div class="chatlog__messages">
+                                <span class="chatlog__author-name" data-user-id="427497529148440578">henridrex :</span>
+                                <span class="chatlog__timestamp">(09/03/2024, 21:34:35)</span>
+                                    <div class="chatlog__message" data-message-id="1216182383485911121" id="message-1216182383485911121" title="Mensagem enviada: 3/9/2024, 9:34:35 PM">
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown preserve-whitespace">tomei ban sem motivo </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chatlog">
+                            <div class="chatlog__message-group">
+                                <div class="chatlog__author-avatar-container">
+                                    <img class="chatlog__author-avatar" src="data:image/webp;base64,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" alt="henridrex">
+                                </div>
+                                <div class="chatlog__messages">
+                                <span class="chatlog__author-name" data-user-id="427497529148440578">henridrex :</span>
+                                <span class="chatlog__timestamp">(09/03/2024, 21:35:22)</span>
+                                    <div class="chatlog__message" data-message-id="1216182578105684079" id="message-1216182578105684079" title="Mensagem enviada: 3/9/2024, 9:35:22 PM">
+                                        <div class="chatlog__embed-description">
+                                            <div class="markdown preserve-whitespace">Bom dia </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chatlog__message-group">
+                            <div class="chatlog__reference-symbol"></div>
+                            <div class="chatlog__reference">
+                                <img class="chatlog__reference-avatar" src="data:image/webp;base64,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" alt="Avatar" loading="lazy">
+                                <span class="chatlog__reference-name" title="Complexo RJ">[BOT] Complexo RJ - :</span>
+                                <div class="chatlog__reference-content">
+                                     <span class="chatlog__reference-link" onclick="scrollToMessage(event, '1216182328041275464')">
+                                      <@427497529148440578>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="chatlog__author-avatar-container">
+                                <img class="chatlog__author-avatar" src="data:image/webp;base64,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" alt="Avatar">
+                            </div>
+                            <div class="chatlog__messages">
+                                <span class="chatlog__author-name" title="Complexo RJ" data-user-id="1110249022591074476">[BOT] Complexo RJ - :</span>
+                                <span class="chatlog__timestamp">(09/03/2024, 23:55:47)</span>
+                                <div class="chatlog__message" data-message-id="1216217915423064064" id="message-1216217915423064064" title="Mensagem enviada: 3/9/2024, 11:55:47 PM">
+                                    <div class="chatlog__embed-description">
+                                        <div class="markdown">
+                                            
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                            <div class="chatlog__embed">
+                                                <div class="chatlog__embed-color-pill" style="background-color: rgb(0, 255, 0);"></div>
+                                                <div class="chatlog__embed-content-container">
+                                                    <div class="chatlog__embed-content">
+                                                        
+                                                        <div class="chatlog__embed-text">
+                                                            
+                                                            <div class="chatlog__embed-title">
+                                                                <a href="#" target="_blank">✅ TRANSCRIPT GERADO</a>
+                                                            </div>
+                                                            <div class="chatlog__embed-description">
+                                                                <div class="markdown preserve-whitespace"><img src="https://cdn.discordapp.com/emojis/1156032672611708979.png?size=96&quality=lossless" alt="setadupla" class="emoji"> Seu ticket foi resolvido e será fechado automaticamente em <strong>7 segundos</strong>.</div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                </div>
+                            </div>
+                        </div>
+                            </div>
+                            </body>
+                            </html>
+                            
